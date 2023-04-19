@@ -3,3 +3,6 @@ build/
 **/*.tsbuildinfo
 /.env
 temp/
+.history/
+.idea/
+.code/
