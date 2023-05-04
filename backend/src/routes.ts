@@ -2,7 +2,7 @@ import { FastifyInstance, FastifyReply, FastifyRequest} from "fastify";
 import {User} from "./db/entities/User.js";
 import {ICreateUsersBody} from "./types.js";
 
-async function DoggrRoutes(app: FastifyInstance, _options = {}) {
+async function MommyTalkRoutes(app: FastifyInstance, _options = {}) {
 	if (!app) {
 		throw new Error("Fastify instance has no value during routes construction");
 	}
@@ -105,4 +105,4 @@ async function DoggrRoutes(app: FastifyInstance, _options = {}) {
 
 }
 
-export default DoggrRoutes;
+export default MommyTalkRoutes;
