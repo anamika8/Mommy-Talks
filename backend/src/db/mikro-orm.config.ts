@@ -32,4 +32,3 @@ export default defineConfig({
 		emit: 'ts', // seeder generation mode
 	},
 });
-
