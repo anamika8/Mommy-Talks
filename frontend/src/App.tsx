@@ -1,4 +1,4 @@
-import { Button, Header, Home, UsersList, Match, Messages } from "@/Components.tsx";
+import { Button, Header, Home, UsersList, Match, Messages } from "@/components/Components.tsx";
 import { useState } from "react";
 import { Link, Route, Routes, Router, BrowserRouter } from "react-router-dom";
 import reactLogo from "@images/react.svg";
