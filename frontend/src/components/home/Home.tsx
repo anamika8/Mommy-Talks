@@ -46,7 +46,7 @@ const LoginButton = () => {
 
     const handleClick = () => {
         // Navigate to a different page
-        navigate('/Match');
+        navigate('/Login');
     };
 
     return (
@@ -59,7 +59,7 @@ const SignupButton = () => {
 
     const handleClick = () => {
         // Navigate to a different page
-        navigate('/Home');
+        navigate('/Signup');
     };
 
     return (
