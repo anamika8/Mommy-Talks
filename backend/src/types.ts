@@ -16,3 +16,9 @@ export type ICreateMessage = {
 	receiver_id: number;
 	message: string;
 };
+
+export type ICreateForum = {
+	title: string;
+	content: string;
+	user: string;
+};

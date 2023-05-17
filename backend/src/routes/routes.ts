@@ -5,6 +5,7 @@ import { FastifyInstance } from "fastify";
 import { MatchRoutesInit } from "./match_routes.js";
 import { MessageRoutesInit } from "./message_routes.js";
 import { UserRoutesInit } from "./user_routes.js";
+import {ForumRoutesInit} from "./forum_routes.js";
 
 /** This function creates all backend routes for the site
  *
@@ -20,6 +21,7 @@ async function MommyTalkRoutes(app: FastifyInstance, _options = {}) {
 	UserRoutesInit(app);
 	MatchRoutesInit(app);
 	MessageRoutesInit(app);
+	ForumRoutesInit(app);
 }
 
 export default MommyTalkRoutes;
