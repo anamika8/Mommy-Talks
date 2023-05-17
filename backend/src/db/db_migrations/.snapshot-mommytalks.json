@@ -54,8 +54,17 @@
           "nullable": false,
           "mappedType": "string"
         },
-        "name": {
-          "name": "name",
+        "first_name": {
+          "name": "first_name",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "last_name": {
+          "name": "last_name",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
@@ -72,14 +81,15 @@
           "nullable": false,
           "mappedType": "string"
         },
-        "pet_type": {
-          "name": "pet_type",
-          "type": "varchar(255)",
+        "last_login": {
+          "name": "last_login",
+          "type": "timestamptz(0)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
-          "nullable": false,
-          "mappedType": "string"
+          "nullable": true,
+          "length": 6,
+          "mappedType": "datetime"
         },
         "role": {
           "name": "role",
@@ -161,8 +171,8 @@
           "length": 6,
           "mappedType": "datetime"
         },
-        "sender_id": {
-          "name": "sender_id",
+        "user_id": {
+          "name": "user_id",
           "type": "int",
           "unsigned": false,
           "autoincrement": false,
@@ -170,17 +180,17 @@
           "nullable": false,
           "mappedType": "integer"
         },
-        "receiver_id": {
-          "name": "receiver_id",
-          "type": "int",
+        "title": {
+          "name": "title",
+          "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "integer"
+          "mappedType": "string"
         },
-        "message": {
-          "name": "message",
+        "content": {
+          "name": "content",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
@@ -189,11 +199,11 @@
           "mappedType": "string"
         }
       },
-      "name": "message",
+      "name": "forums",
       "schema": "public",
       "indexes": [
         {
-          "keyName": "message_pkey",
+          "keyName": "forums_pkey",
           "columnNames": [
             "id"
           ],
@@ -204,24 +214,12 @@
       ],
       "checks": [],
       "foreignKeys": {
-        "message_sender_id_foreign": {
-          "constraintName": "message_sender_id_foreign",
+        "forums_user_id_foreign": {
+          "constraintName": "forums_user_id_foreign",
           "columnNames": [
-            "sender_id"
+            "user_id"
           ],
-          "localTableName": "public.message",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "public.users",
-          "updateRule": "cascade"
-        },
-        "message_receiver_id_foreign": {
-          "constraintName": "message_receiver_id_foreign",
-          "columnNames": [
-            "receiver_id"
-          ],
-          "localTableName": "public.message",
+          "localTableName": "public.forums",
           "referencedColumnNames": [
             "id"
           ],
@@ -232,26 +230,27 @@
     },
     {
       "columns": {
-        "owner_id": {
-          "name": "owner_id",
-          "type": "int",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "integer"
-        },
-        "matchee_id": {
-          "name": "matchee_id",
-          "type": "int",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
           "nullable": false,
           "mappedType": "integer"
         },
         "created_at": {
           "name": "created_at",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 6,
+          "mappedType": "datetime"
+        },
+        "updated_at": {
+          "name": "updated_at",
           "type": "timestamptz(0)",
           "unsigned": false,
           "autoincrement": false,
@@ -269,46 +268,81 @@
           "nullable": true,
           "length": 6,
           "mappedType": "datetime"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "forum_id_id": {
+          "name": "forum_id_id",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "comment": {
+          "name": "comment",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "deleted": {
+          "name": "deleted",
+          "type": "boolean",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "boolean"
         }
       },
-      "name": "match",
+      "name": "comments",
       "schema": "public",
       "indexes": [
         {
-          "keyName": "match_pkey",
+          "keyName": "comments_pkey",
           "columnNames": [
-            "owner_id",
-            "matchee_id"
+            "id"
           ],
-          "composite": true,
+          "composite": false,
           "primary": true,
           "unique": true
         }
       ],
       "checks": [],
       "foreignKeys": {
-        "match_owner_id_foreign": {
-          "constraintName": "match_owner_id_foreign",
+        "comments_user_id_foreign": {
+          "constraintName": "comments_user_id_foreign",
           "columnNames": [
-            "owner_id"
+            "user_id"
           ],
-          "localTableName": "public.match",
+          "localTableName": "public.comments",
           "referencedColumnNames": [
             "id"
           ],
           "referencedTableName": "public.users",
           "updateRule": "cascade"
         },
-        "match_matchee_id_foreign": {
-          "constraintName": "match_matchee_id_foreign",
+        "comments_forum_id_id_foreign": {
+          "constraintName": "comments_forum_id_id_foreign",
           "columnNames": [
-            "matchee_id"
+            "forum_id_id"
           ],
-          "localTableName": "public.match",
+          "localTableName": "public.comments",
           "referencedColumnNames": [
             "id"
           ],
-          "referencedTableName": "public.users",
+          "referencedTableName": "public.forums",
           "updateRule": "cascade"
         }
       }

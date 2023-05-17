@@ -6,12 +6,12 @@ export class ForumSeeder extends Seeder {
 	async run(em: EntityManager, context: Dictionary): Promise<void> {
 		const forumRepo = em.getRepository(Forum);
 		// https://mikro-orm.io/docs/seeding#shared-context
-		forumRepo.create({
+		context.forum1 = forumRepo.create({
 			user: context.user1,
 			title: "Hi",
 			content: "Test message 1",
 		});
-		forumRepo.create({
+		context.forum2 =  forumRepo.create({
 			user: context.user2,
 			title: "Introduction",
 			content: "Hi, I am User-2",

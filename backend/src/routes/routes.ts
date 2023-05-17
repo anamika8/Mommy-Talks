@@ -2,8 +2,6 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import { FastifyInstance } from "fastify";
-import { MatchRoutesInit } from "./match_routes.js";
-import { MessageRoutesInit } from "./message_routes.js";
 import { UserRoutesInit } from "./user_routes.js";
 import {ForumRoutesInit} from "./forum_routes.js";
 
@@ -11,7 +9,7 @@ import {ForumRoutesInit} from "./forum_routes.js";
  *
  * @param {FastifyInstance} app - The base Fastify listen server instance
  * @param {{}} _options - Fastify instance options (Optional)
- * @returns {Promise<void>} - Returns all of the initialized routes
+ * @returns {Promise<void>} - Returns all the initialized routes
  */
 async function MommyTalkRoutes(app: FastifyInstance, _options = {}) {
 	if (!app) {
@@ -19,8 +17,6 @@ async function MommyTalkRoutes(app: FastifyInstance, _options = {}) {
 	}
 
 	UserRoutesInit(app);
-	MatchRoutesInit(app);
-	MessageRoutesInit(app);
 	ForumRoutesInit(app);
 }
 

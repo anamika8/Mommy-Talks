@@ -1,9 +1,9 @@
 import { BaseEntity, PrimaryKey, Property } from "@mikro-orm/core";
 import { SoftDeletable } from "mikro-orm-soft-delete";
 
-@SoftDeletable(() => DoggrBaseEntity, "deleted_at", () => new Date())
+@SoftDeletable(() => MommyTalksBaseEntity, "deleted_at", () => new Date())
 //https://mikro-orm.io/docs/defining-entities/#using-mikroorms-baseentity-previously-wrappedentity
-export class DoggrBaseEntity extends BaseEntity<DoggrBaseEntity, "id"> {
+export class MommyTalksBaseEntity extends BaseEntity<MommyTalksBaseEntity, "id"> {
 	@PrimaryKey()
 	id!: number;
 

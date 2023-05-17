@@ -12,8 +12,8 @@ const __dirname = path.dirname(__filename);
 const seedPath = path.join(__dirname, "seeders");
 const entitiesJSPath = path.join(__dirname, "..", "..", "build", "db", "entities");
 const entitiesTSPath = path.join(__dirname, "entities");
-const migrationsJSPath = path.join(__dirname, "..", "..", "build", "db", "migrations");
-const migrationsTSPath = path.join(__dirname, "migrations");
+const migrationsJSPath = path.join(__dirname, "..", "..", "build", "db", "db_migrations");
+const migrationsTSPath = path.join(__dirname, "db_migrations");
 
 export default defineConfig({
 	entities: [entitiesJSPath],
