@@ -22,14 +22,14 @@ export function UserRoutesInit(app: FastifyInstance) {
 	// User CRUD
 	// Refactor note - We DO use email still for creation!  We can't know the ID yet
 	app.post<{ Body: ICreateUsersBody }>("/users", async (req, reply) => {
-		const { name, email, password, petType } = req.body;
+		const { first_name, last_name, email, password } = req.body;
 
 		try {
 			const newUser = await req.em.create(User, {
-				name,
+				first_name,
+				last_name,
 				email,
 				password,
-				petType,
 				// We'll only create Admins manually!
 				role: UserRole.USER,
 			});
@@ -55,11 +55,11 @@ export function UserRoutesInit(app: FastifyInstance) {
 
 	// UPDATE
 	app.put<{ Body: IUpdateUsersBody }>("/users", async (req, reply) => {
-		const { name, id, petType } = req.body;
+		const { first_name, id, last_name } = req.body;
 
 		const userToChange = await req.em.findOneOrFail(User, id, { strict: true });
-		userToChange.name = name;
-		userToChange.petType = petType;
+		userToChange.first_name = first_name;
+		userToChange.last_name = last_name;
 
 		// Reminder -- this is how we persist our JS object changes to the database itself
 		await req.em.flush();

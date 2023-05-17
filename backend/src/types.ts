@@ -1,14 +1,14 @@
 export type ICreateUsersBody = {
-	name: string;
+	first_name: string;
+	last_name: string;
 	email: string;
 	password: string;
-	petType: string;
 };
 
 export type IUpdateUsersBody = {
-	name: string;
+	first_name: string;
+	last_name: string;
 	id: number;
-	petType: string;
 };
 
 export type ICreateForum = {

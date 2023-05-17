@@ -112,8 +112,8 @@ export function ForumRoutesInit(app: FastifyInstance) {
 
 	// DELETE
 	app.delete<{Body: { forumId: string, password: string }}>("/forum", async(req, reply) => {
-		const { commentId, password} = req.body;
-		const id = parseInt(commentId);
+		const { forumId, password} = req.body;
+		const id = parseInt(forumId);
 
 		const admin_password = process.env.ADMIN_PASSWORD;
 		if (admin_password === password) {
