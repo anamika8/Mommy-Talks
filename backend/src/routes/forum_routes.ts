@@ -84,9 +84,9 @@ export function ForumRoutesInit(app: FastifyInstance) {
 			try{
 				const forumToUpdate = await req.em.findOne(Forum, { id, "deleted_at": null });
 				if (forumToUpdate == null) {
-					console.log(`No message with the id - ${id} exists.`);
+					console.log(`No forum with the id - ${id} exists.`);
 					// send blank output if message id is not present
-					return reply.status(500).send(`No message with the id - ${id} exists.`);
+					return reply.status(500).send(`No forum with the id - ${id} exists.`);
 				}
 				if (title !== undefined) {
 					forumToUpdate.title = title;
@@ -112,8 +112,8 @@ export function ForumRoutesInit(app: FastifyInstance) {
 
 	// DELETE
 	app.delete<{Body: { forumId: string, password: string }}>("/forum", async(req, reply) => {
-		const { forumId, password} = req.body;
-		const id = parseInt(forumId);
+		const { commentId, password} = req.body;
+		const id = parseInt(commentId);
 
 		const admin_password = process.env.ADMIN_PASSWORD;
 		if (admin_password === password) {

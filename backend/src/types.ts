@@ -11,14 +11,14 @@ export type IUpdateUsersBody = {
 	petType: string;
 };
 
-export type ICreateMessage = {
-	sender_id: number;
-	receiver_id: number;
-	message: string;
-};
-
 export type ICreateForum = {
 	title: string;
 	content: string;
+	user: string;
+};
+
+export type ICreateComment = {
+	comment: string;
+	forumId: number;
 	user: string;
 };
