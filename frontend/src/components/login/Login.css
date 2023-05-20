@@ -28,7 +28,7 @@ fieldset {
   margin: 0;
 }
 
-.logo {
+.symbol {
   display: block;
   width: auto;
   height: 160px;
@@ -91,19 +91,17 @@ button[type="submit"] {
 /* Tricky! A Firefox bug makes our focus outlines disappear,
   so we have to restore them ourselves. This focus outline is an
   a11y MUST for keyboard users! Note that we are NOT expecting you 
-  to know this. You can read more about the issue & the fix at: 
-  
-  https://thinkful-ed.github.io/firefox-focus-bug-demo/
+  to know this. You can read more about the issue & the fix at:
   */
 input[type="email"]:focus,
 input[type="password"]:focus,
 button[type="submit"]:focus {
- /* Restore desirable focus behavior 
+ /* Restore desirable focus behavior
  in non-webkit browsers like Firefox */
  outline: auto 2px #87ceeb;
  /* Preseve default focus behavior in webkit browsers */
  outline: auto 5px -webkit-focus-ring-color;
- box-shadow: 0;
+ box-shadow: none;
 }
 
 
@@ -145,12 +143,15 @@ button[type="submit"]:focus {
 }
 
 .footer a {
-  color:black;
+  color: black;
+  text-decoration: underline;
+  font-weight: bold;
 }
 
 .footer a:hover {
-  color: darkblue; 
+  color: darkblue;
 }
+
 
 @media only screen and (max-width: 380px) {
 
@@ -158,7 +159,7 @@ body {
   font-size: 14px;
 }
 
-.logo {
+.symbol {
   width: auto;
   height: 160px;
 }
@@ -180,7 +181,7 @@ body {
   font-size: 15px;
 }
 
-.logo {
+.symbol {
   width: auto;
   height: 180px;
 }
@@ -206,7 +207,7 @@ body {
 .login-form {
   width: 500px;
 }
-.logo{
+.symbol{
   width: auto;
   height: 200px;
 }
@@ -232,7 +233,7 @@ button[type="submit"] {
 }
 
 @media only screen and (min-width: 1031px) {
-  .logo {
+  .symbol {
     display: block;
     width: auto;
     height: 165px;

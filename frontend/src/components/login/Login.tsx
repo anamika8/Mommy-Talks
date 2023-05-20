@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from './logo.jpg';
+import symbol from './logo.jpg';
 import "./login.css";
 
 export const Login = () => {
@@ -16,7 +16,7 @@ export const Login = () => {
 export const Header = () => {
     return (
         <header role="banner">
-            <img src={logo} alt="caption" className="logo" />
+            <img src={symbol} alt="caption" className="symbol"/>
         </header>
     );
 };
