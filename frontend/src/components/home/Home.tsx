@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import {Link} from "react-router-dom";
+import symbol from './logo.jpg';
 
 // 1) Make a place to store the users list result
 // 2) Make the actual request to backend and store result
@@ -18,6 +19,7 @@ import {Link} from "react-router-dom";
 export const Home = () => {
     return (
         <div>
+            <Header />
             <Title />
             <Subtitle />
             <Main />
@@ -26,7 +28,13 @@ export const Home = () => {
         </div>
     );
 };
-
+export const Header = () => {
+    return (
+        <header role="banner">
+            <img src={symbol} alt="caption" className="symbol"/>
+        </header>
+    );
+};
 export function Title() {
     return(<h1>Mommy Talks</h1>);
 }
@@ -64,52 +72,5 @@ const SignupButton = () => {
 
     return (
         <button onClick={handleClick}>Signup</button>
-    );
-};
-export const Button = () => {
-    const [clicks, setClicks] = useState(0);
-    //const history = useHistory();
-
-    return (
-        <button
-            onClick={() => {
-                console.log("Clicked!");
-                setClicks(clicks + 1);
-            }}
-        >
-            Clicks: {clicks}
-        </button>
-    );
-};
-
-export const UsersList = () => {
-    const [users, setUsers] = useState([]);
-
-    useEffect( () => {
-        const getUsers = async() => {
-            const usersRes = await axios.get("http://localhost:8080/users");
-            return usersRes.data;
-
-        };
-
-        getUsers().then(setUsers);
-    }, []);
-
-    return (
-        <div>
-            <h2>Users:</h2>
-            {
-                users ?
-                    <ul>
-                        {
-                            users.map( (user: {email: string, name: string}) =>
-                                <li key={user.email}> {user.name} - {user.email} </li>)
-                        }
-                    </ul>
-                    :
-                    null
-            }
-
-        </div>
     );
 };

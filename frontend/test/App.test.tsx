@@ -6,7 +6,7 @@ import { render, fireEvent, screen } from "@testing-library/react";
 
 // add custom jest matchers from jest-dom
 import "@testing-library/jest-dom";
-import { App } from "../src/App.js";
+import { App } from "../src/app/App.js";
 
 test("Math.sqrt()", () => {
 	expect(Math.sqrt(4)).toBe(2);
