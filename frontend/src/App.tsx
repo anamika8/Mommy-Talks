@@ -6,7 +6,7 @@ import viteLogo from "/vite.svg";
 import "@css/App.css";
 
 // This is our first React "Component"
-export function App() {
+function App() {
 	return (
 		<BrowserRouter>
 		<div className="App">
@@ -20,7 +20,6 @@ export function App() {
 
 			<Routes>
 				<Route path="/" element={<Home />} />
-				<Route path="/match" element={<Match />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/signup" element={<Signup />} />
 			</Routes>
