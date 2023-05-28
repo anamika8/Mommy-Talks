@@ -17,19 +17,6 @@ import "./Home.css";
  * You “use” React features at the top of your component similar to how you “import” modules
  * at the top of your file.
  */
-/*export const Home = () => {
-    return (
-        <div>
-            <Header />
-            <Title />
-            <Subtitle />
-            <Main />
-            <LoginButton />
-            <SignupButton />
-        </div>
-    );
-};*/
-
 export const Home = () => {
     return (
         <div className="js-container">
@@ -39,7 +26,7 @@ export const Home = () => {
             <FontawesomeScript />
         </div>
     );
-}
+};
 
 export const Header = () => {
     return (
@@ -48,25 +35,11 @@ export const Header = () => {
         </header>
     );
 };
-/*
-export function Title() {
-    return(<h1>Mommy Talks</h1>);
-}
-
-export function Subtitle() {
-    return(<h3>Moms will not feel alone here!!!</h3>);
-}
-export function Main() {
-    return(<p className="theme-details">A place for new, upcoming and experienced mothers to share their concern, get
-        helpful suggestions.</p>
-    );
-}*/
-
 const LoginButton = () => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        // Navigate to a different page
+        // Navigate to a login page
         navigate('/Login');
     };
 
@@ -79,7 +52,7 @@ const SignupButton = () => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        // Navigate to a different page
+        // Navigate to a signup page
         navigate('/Signup');
     };
 
@@ -101,15 +74,13 @@ const Main = () => (
     </main>
 );
 const FacebookButton = () => {
-    const navigate = useNavigate();
-
-    const handleClick = () => {
-        // Navigate to the Facebook page
-        navigate('https://www.facebook.com/');
+    const handleFacebookLogin = () => {
+        // Open Facebook login page in a new tab/window
+        window.open('https://facebook.com/login', '_blank');
     };
 
     return (
-        <button onClick={handleClick}>
+        <button onClick={handleFacebookLogin}>
             <i className="fa fa-facebook-official" aria-hidden="true"></i> Facebook
         </button>
     );
@@ -131,7 +102,6 @@ const Footer = () => (
         </p>
     </footer>
 );
-
 const FontawesomeScript = () => {
     useEffect(() => {
         const script = document.createElement('script');
