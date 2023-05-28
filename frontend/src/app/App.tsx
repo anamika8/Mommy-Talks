@@ -1,4 +1,4 @@
-import { Button, Header, Home, UsersList, Match, Messages , Login, Signup} from "@/components/Components.tsx";
+import { Button, Header, Home, UsersList, Match, Messages , Login, Signup, Forum} from "@/components/Components.tsx";
 import { useState } from "react";
 import { Link, Route, Routes, Router, BrowserRouter } from "react-router-dom";
 import reactLogo from "@images/react.svg";
@@ -14,7 +14,8 @@ function App() {
 				<div className="menu">
 					<Link to="/">Home</Link> ||
 					<Link to="/login">Login</Link> ||
-					<Link to="/signup">Signup</Link>
+					<Link to="/signup">Signup</Link> ||
+					<Link to="/forum">Forum</Link>
 				</div>
 			</nav>
 
@@ -22,6 +23,7 @@ function App() {
 				<Route path="/" element={<Home />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/signup" element={<Signup />} />
+				<Route path="/forum" element={<Forum />} />
 			</Routes>
 
 		</div>
