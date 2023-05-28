@@ -8,7 +8,6 @@ export const Forum = () => {
         <div>
             <Header />
             <Main />
-            <Footer />
             <FontawesomeScript />
         </div>
     );
@@ -61,13 +60,56 @@ const FontawesomeScript = () => {
 
     return null;
 };
+/*const SearchInput = () => {
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const handleChange = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        // Perform search or handle search functionality
+        console.log('Search term:', searchTerm);
+    };
+
+    return (
+        <form className="input-container" onSubmit={handleSubmit}>
+            <input
+                type="text"
+                id="search"
+                className="search-input"
+                placeholder="Search Topics..."
+                value={searchTerm}
+                onChange={handleChange}
+            />
+            <button type="submit" className="search-button">
+                <i className="fa fa-search icon" id="search-icon"></i>
+            </button>
+        </form>
+    );
+};
+*/
 
 const SearchSection = () => {
+
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const handleChange = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        // Perform search or handle search functionality
+        console.log('Search term:', searchTerm);
+    };
+
     return (
         <div id="search-section">
             <div className="input-container">
-                <input type="text" id="search" placeholder="Search Topics..." />
-                <i className="fa fa-search icon" id="search-icon"></i>
+                <input type="text" id="search" placeholder="Search Topics..." onChange={handleChange}/>
+                <i className="fa fa-search icon" id="search-icon" onClick={handleSubmit}></i>
             </div>
 
             <div className="pages">
