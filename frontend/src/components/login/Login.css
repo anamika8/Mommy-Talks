@@ -140,6 +140,7 @@ button[type="submit"]:focus {
   font-weight: 600;
   border: 0;
   padding: 0;
+  float: revert;
 }
 
 .footer a {

@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import symbol from './logo.jpg';
 import "./forum.css";
-
 
 export const Forum = () => {
     return (
@@ -10,6 +9,7 @@ export const Forum = () => {
             <Header />
             <Main />
             <Footer />
+            <FontawesomeScript />
         </div>
     );
 };
@@ -46,14 +46,22 @@ export const Header = () => {
         </header>
     );
 };
-/*
-export const Header = () => {
-    return (
-        <header role="banner">
-            <img src={symbol} alt="caption" className="symbol"/>
-        </header>
-    );
-};*/
+
+const FontawesomeScript = () => {
+    useEffect(() => {
+        const script = document.createElement('script');
+        script.src = 'https://use.fontawesome.com/3a36aded45.js';
+        script.async = true;
+        document.body.appendChild(script);
+
+        return () => {
+            document.body.removeChild(script);
+        };
+    }, []);
+
+    return null;
+};
+
 const SearchSection = () => {
     return (
         <div id="search-section">
@@ -95,18 +103,9 @@ export const Main = () => {
 };
 
 export const Footer = () => {
-    const navigate = useNavigate();
-
-    const handleSignupClick = (event) => {
-        event.preventDefault();
-        navigate("/signup");
-    };
-
     return (
         <footer role="contentinfo" className="footer">
-            <p>
-                Don't have an account?
-            </p>
+            © 2023 created by Anamika
         </footer>
     );
 };

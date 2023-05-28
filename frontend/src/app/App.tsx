@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, Route, Routes, Router, BrowserRouter } from "react-router-dom";
 import reactLogo from "@images/react.svg";
 import viteLogo from "/vite.svg";
-import "@css/App.css";
+//import "@css/App.css";
 
 // This is our first React "Component"
 function App() {
