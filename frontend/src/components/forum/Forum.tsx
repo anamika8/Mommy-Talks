@@ -60,39 +60,7 @@ const FontawesomeScript = () => {
 
     return null;
 };
-/*const SearchInput = () => {
-    const [searchTerm, setSearchTerm] = useState('');
-
-    const handleChange = (event) => {
-        setSearchTerm(event.target.value);
-    };
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        // Perform search or handle search functionality
-        console.log('Search term:', searchTerm);
-    };
-
-    return (
-        <form className="input-container" onSubmit={handleSubmit}>
-            <input
-                type="text"
-                id="search"
-                className="search-input"
-                placeholder="Search Topics..."
-                value={searchTerm}
-                onChange={handleChange}
-            />
-            <button type="submit" className="search-button">
-                <i className="fa fa-search icon" id="search-icon"></i>
-            </button>
-        </form>
-    );
-};
-*/
-
 const SearchSection = () => {
-
     const [searchTerm, setSearchTerm] = useState('');
 
     const handleChange = (event) => {
@@ -103,18 +71,36 @@ const SearchSection = () => {
         event.preventDefault();
         // Perform search or handle search functionality
         console.log('Search term:', searchTerm);
+        // Clear the search input field
+        setSearchTerm('');
     };
+
+        const handleNextClick = () => {
+             console.log("click next");
+            //buildAnyPageFeed(feedDataArray, feedIndexStartWith);
+        };
+
+        const handlePrevClick = () => {
+           console.log("click prev");
+            //buildAnyPageFeed(feedDataArray, feedIndexStartWith);
+        };
 
     return (
         <div id="search-section">
             <div className="input-container">
-                <input type="text" id="search" placeholder="Search Topics..." onChange={handleChange}/>
+                <input
+                    type="text"
+                    id="search"
+                    placeholder="Search Topics..."
+                    value={searchTerm}
+                    onChange={handleChange}
+                />
                 <i className="fa fa-search icon" id="search-icon" onClick={handleSubmit}></i>
             </div>
 
             <div className="pages">
-                <a className="pages-button" id="prev">&lt; Prev</a>
-                <a className="pages-button" id="next">Next &gt;</a>
+                <a className="pages-button" id="prev" onClick={handlePrevClick}>&lt; Prev</a>
+                <a className="pages-button" id="next" onClick={handleNextClick}>Next &gt;</a>
             </div>
         </div>
     );
