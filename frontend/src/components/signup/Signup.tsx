@@ -164,7 +164,7 @@ export const Footer = () => {
     };
 
     return (
-        <footer role="contentinfo" className="footer">
+        <footer role="contentinfo" className="footerInfo">
             <p>
                 Don't have an account?{" "}
                 <a href="/" onClick={handleLoginClick}>

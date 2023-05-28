@@ -32,16 +32,14 @@ import "./Home.css";
 
 export const Home = () => {
     return (
-        <main role="main">
+        <div className="js-container">
             <Header />
             <Main />
-            <LoginButton />
-            <SignupButton />
-            <FacebookButton />
+            <Footer />
             <FontawesomeScript />
-        </main>
+        </div>
     );
-};
+}
 
 export const Header = () => {
     return (
@@ -58,12 +56,11 @@ export function Title() {
 export function Subtitle() {
     return(<h3>Moms will not feel alone here!!!</h3>);
 }
-
 export function Main() {
     return(<p className="theme-details">A place for new, upcoming and experienced mothers to share their concern, get
         helpful suggestions.</p>
     );
-}
+}*/
 
 const LoginButton = () => {
     const navigate = useNavigate();
@@ -90,68 +87,50 @@ const SignupButton = () => {
         <button onClick={handleClick}>Signup</button>
     );
 };
-*/
 
 
-
-const Title = () => {
-    return <h2 className="theme">Moms will not feel alone here !!!</h2>;
-};
-
-const Subtitle = () => {
-    return <p className="theme-details">A place for new, upcoming and experienced mothers to share their concern, get helpful suggestions.</p>;
-};
-
-const Main = () => {
-    return (
+const Main = () => (
+    <main role="main">
         <div className="app-first-page">
-            <Title />
-            <Subtitle />
+            <h2 className="theme">Moms will not feel alone here !!!</h2>
+            <p className="theme-details">
+                A place for new, upcoming and experienced mothers to share their concern, get helpful suggestions.
+            </p>
+            <ButtonContainer />
         </div>
-    );
-};
-
-const LoginButton = () => {
-    const navigate = useNavigate();
-    const handleLoginClick = () => {
-        // Handle login button click event
-        navigate('/Login');
-    };
-
-    return (
-        <button onClick={handleLoginClick}>
-            <i className="fa fa-sign-in" aria-hidden="true"></i> Login
-        </button>
-    );
-};
-
-const SignupButton = () => {
-    const navigate = useNavigate();
-    const handleSignupClick = () => {
-        // Navigate to a different page
-        navigate('/Signup');
-    };
-
-    return (
-        <button onClick={handleSignupClick}>
-            <i className="fa fa-user-plus" aria-hidden="true"></i> Signup
-        </button>
-    );
-};
-
+    </main>
+);
 const FacebookButton = () => {
-    const handleFacebookClick = () => {
-        // Handle Facebook button click event
-        window.location.href = 'https://facebook.com/';
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        // Navigate to the Facebook page
+        navigate('https://www.facebook.com/');
     };
 
     return (
-        <button onClick={handleFacebookClick}>
+        <button onClick={handleClick}>
             <i className="fa fa-facebook-official" aria-hidden="true"></i> Facebook
         </button>
     );
 };
+const ButtonContainer = () => (
+    <div className="button-container">
+        <LoginButton />
+        <SignupButton />
+        <FacebookButton />
+    </div>
+);
 
+const Footer = () => (
+    <footer role="contentinfo" className="footerInfo">
+        <p>
+            Demo Credentials: <br />
+            Email: example@email.com <br />
+            Password: Welcome@1
+        </p>
+    </footer>
+);
 
 const FontawesomeScript = () => {
     useEffect(() => {

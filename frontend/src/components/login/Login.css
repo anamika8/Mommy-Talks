@@ -133,23 +133,22 @@ button[type="submit"]:focus {
 }
 
 /* footer */
-.footer {
+.footerInfo {
   text-align: center;
   color: black;
   margin: 20px auto;
   font-weight: 600;
   border: 0;
   padding: 0;
-  float: revert;
 }
 
-.footer a {
+.footerInfo a {
   color: black;
   text-decoration: underline;
   font-weight: bold;
 }
 
-.footer a:hover {
+.footerInfo a:hover {
   color: darkblue;
 }
 

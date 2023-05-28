@@ -200,14 +200,12 @@ span.result {
   
 }
 
-.footer {
+.footerInfo {
   color:	#484848;
   margin: 10px auto;
   border: 0;
   padding: 0;
   display: block;
-  float: right;
-  margin-right: 5%;
   font-size: 15px;
 }
 
@@ -233,7 +231,7 @@ span.result {
     font-size: 0.8rem;   
 }
 
-.footer {
+.footerInfo {
   font-size: 11px;
 }
 
