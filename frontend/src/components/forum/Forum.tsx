@@ -9,6 +9,7 @@ export const Forum = () => {
             <Header />
             <Main />
             <FontawesomeScript />
+            <Footer />
         </div>
     );
 };
@@ -132,7 +133,7 @@ export const Main = () => {
 
 export const Footer = () => {
     return (
-        <footer role="contentinfo" className="footerInfo">
+        <footer role="contentinfo" className="footerForum">
             © 2023 created by Anamika
         </footer>
     );

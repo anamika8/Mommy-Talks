@@ -213,13 +213,14 @@ span.result {
   
 }
 
-.footerInfo {
+.footerForum {
   color:	#484848;
   margin: 10px auto;
   border: 0;
   padding: 0;
   display: block;
   font-size: 15px;
+  float:right!important;
 }
 
 @media only screen and (max-width: 325px) {
