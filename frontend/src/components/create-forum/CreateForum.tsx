@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import symbol from "@/components/forum/logo.jpg";
 import "./create-forum.css";
+import {ForumService} from "@/services/ForumService.tsx";
 
 export const CreateForum = () => {
     return (
@@ -24,6 +25,7 @@ export const MainContent = () => {
 };
 
 export const Form = () => {
+    const navigate = useNavigate();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [submitFailed, setSubmitFailed] = useState(false);
@@ -41,13 +43,15 @@ export const Form = () => {
     };
     const handleSubmit = (event) => {
         event.preventDefault();
-        // Handle form submission logic here
-        console.log('Form submitted:', title, content);
-
-
-        setTitle("");
-        setContent("");
-        setSubmitFailed(true);
+        const email = "email2@email.com";
+        ForumService.send(email, title, content)
+            .then((response) => {
+                console.log(`Successful post : ${response}`);
+                navigate("/forum");
+            })
+            .catch(err => {
+                console.error(err);
+            });
     };
 
     return (

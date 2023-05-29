@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import symbol from './logo.jpg';
 import "./forum.css";
+import {ForumType} from "@/ProfileTypes.ts";
+import {getAllForums} from "@/services/HttpClient.tsx";
 
 export const Forum = () => {
     return (
@@ -127,26 +129,45 @@ const SearchSection = () => {
     );
 };
 
-const PostResult = () => {
+const PostResult = ({ currentForum }: { currentForum: ForumType }) => {
+    console.log(currentForum.content);
     return (
         <div className="post_log colm-4 border">
-            <span className="result">Title: </span>
-            <span className="result">Content: </span>
+            <span className="result">Title: {currentForum.title}</span>
+            <span className="result">Content: {currentForum.content}</span>
             <a className="more-details">Learn More</a>
         </div>
     );
 };
 
 export const Main = () => {
+    const [forums, setForums] = useState<ForumType[]>();
+
+    const fetchTopics = (): boolean => {
+        getAllForums()
+            .then((response) => {
+                setForums(response);
+            })
+            .catch( (err) => console.log("Error in fetch profile", err));
+        return true;
+    };
+
+    useEffect(() => {
+        fetchTopics();
+    }, []);
     return (
         <main role="main">
             <SearchSection />
-
             <div className="post_results rows" id="allFeed">
-                <PostResult />
-                <PostResult />
-                <PostResult />
+                {forums ? (
+                    forums.map((post, index) => (
+                        <PostResult key={index} currentForum={post} />
+                    ))
+                ) : (
+                    <p>Loading...</p>
+                )}
             </div>
+
         </main>
     );
 };
