@@ -1,11 +1,12 @@
-import { Home, Login, Signup, Forum, CreateForum} from "@/components/Components.tsx";
+import {Home, Login, Signup, Forum, CreateForum, UpdateForum} from "@/components/Components.tsx";
 import { useState } from "react";
-import { Link, Route, Routes, Router, BrowserRouter } from "react-router-dom";
+import { Link, Route, Routes, Router, BrowserRouter, useLocation } from "react-router-dom";
 import reactLogo from "@images/react.svg";
 import viteLogo from "/vite.svg";
 //import "@css/App.css";
 
 // This is our first React "Component"
+
 function App() {
 	return (
 		<BrowserRouter>
@@ -25,6 +26,7 @@ function App() {
 				<Route path="/signup" element={<Signup />} />
 				<Route path="/forum" element={<Forum />} />
 				<Route path="/create-forum" element={<CreateForum />} />
+				<Route path="/update-forum" element={<UpdateForum />} />
 			</Routes>
 
 		</div>
@@ -32,6 +34,23 @@ function App() {
 	);
 }
 
+/*
+function App() {
+	return (
+		<BrowserRouter>
+			<div className="App">
+				<Routes>
+					<Route path="/" element={<Home />} />
+					<Route path="/login" element={<Login />} />
+					<Route path="/signup" element={<Signup />} />
+					<Route path="/forum" element={<Forum />} />
+					<Route path="/create-forum" element={<CreateForum />} />
+					<Route path="/update-forum" element={<UpdateForum />} />
+				</Routes>
+			</div>
+		</BrowserRouter>
+	);
+}*/
 export default App;
 
 

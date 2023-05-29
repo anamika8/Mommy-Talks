@@ -142,13 +142,20 @@ const SearchSection = ({
         </div>
     );
 };
-
 const PostResult = ({ currentForum }: { currentForum: ForumType }) => {
+    const navigate = useNavigate();
+    const handleMoreInfo = () => {
+        const forumId = currentForum.id.toString();
+        localStorage.setItem('forumId', forumId);
+        console.log('Details page forum id: ' + forumId);
+        navigate('/update-forum');
+    };
+
     return (
         <div className="post_log colm-4 border">
             <span className="result">Title: {currentForum.title}</span>
             <span className="result">Content: {currentForum.content}</span>
-            <a className="more-details">Learn More</a>
+            <a className="more-details" onClick={handleMoreInfo}>Learn More</a>
         </div>
     );
 };
