@@ -1,4 +1,4 @@
-import { Button, Header, Home, UsersList, Match, Messages , Login, Signup, Forum} from "@/components/Components.tsx";
+import { Home, Login, Signup, Forum, CreateForum} from "@/components/Components.tsx";
 import { useState } from "react";
 import { Link, Route, Routes, Router, BrowserRouter } from "react-router-dom";
 import reactLogo from "@images/react.svg";
@@ -24,6 +24,7 @@ function App() {
 				<Route path="/login" element={<Login />} />
 				<Route path="/signup" element={<Signup />} />
 				<Route path="/forum" element={<Forum />} />
+				<Route path="/create-forum" element={<CreateForum />} />
 			</Routes>
 
 		</div>
