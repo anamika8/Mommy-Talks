@@ -220,7 +220,8 @@ span.result {
   padding: 0;
   display: block;
   font-size: 15px;
-  float:right!important;
+  float: right!important;
+  clear: both;
 }
 
 @media only screen and (max-width: 325px) {
