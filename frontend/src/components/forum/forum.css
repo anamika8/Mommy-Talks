@@ -96,8 +96,8 @@ div {
 .input-container {
     display: flex;
     align-items: center;
-    width: 58%;
-    margin-left: 22%;
+    width: 28%;
+    margin: 0 auto;
 }
 
 #search {
@@ -260,12 +260,22 @@ span.result {
 }
 
 }
+@media only screen and (max-width: 763px) and (min-width: 381px) {
+    .input-container {
+        width: 71%;
+        margin: 0 auto;
+    }
+}
 
 @media only screen and (max-width: 1030px) and (min-width: 765px){
 
 #search {
   font-weight: 600;
   font-size:18px;
+}
+.input-container{
+    width:50%;
+    margin:0 auto;
 }
 
 body {
@@ -289,7 +299,6 @@ span.result {
     font-size: 1.6rem;
     
 }
-
 
 }
     
