@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import symbol from './logo.jpg';
 import "./forum.css";
 import {ForumType} from "@/ProfileTypes.ts";
-import {getAllForums} from "@/services/HttpClient.tsx";
+import {getAllForums, searchTopic} from "@/services/HttpClient.tsx";
 
 export const Forum = () => {
     return (
@@ -83,7 +83,7 @@ const FontawesomeScript = () => {
 
     return null;
 };
-const SearchSection = () => {
+const SearchSection = ({ startIndex, onStartIndexChange }: { startIndex: number; onStartIndexChange: (newStartIndex: number) => void }) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const handleChange = (event) => {
@@ -98,15 +98,17 @@ const SearchSection = () => {
         setSearchTerm('');
     };
 
-        const handleNextClick = () => {
-             console.log("click next");
-            //buildAnyPageFeed(feedDataArray, feedIndexStartWith);
-        };
+    const handleNextClick = () => {
+        console.log("click next");
+        onStartIndexChange(startIndex + 3);
+    };
 
-        const handlePrevClick = () => {
-           console.log("click prev");
-            //buildAnyPageFeed(feedDataArray, feedIndexStartWith);
-        };
+    const handlePrevClick = () => {
+       console.log("click prev");
+       if (startIndex - 3 >= 0) {
+           onStartIndexChange(startIndex - 3);
+       }
+    };
 
     return (
         <div id="search-section">
@@ -130,7 +132,6 @@ const SearchSection = () => {
 };
 
 const PostResult = ({ currentForum }: { currentForum: ForumType }) => {
-    console.log(currentForum.content);
     return (
         <div className="post_log colm-4 border">
             <span className="result">Title: {currentForum.title}</span>
@@ -142,6 +143,12 @@ const PostResult = ({ currentForum }: { currentForum: ForumType }) => {
 
 export const Main = () => {
     const [forums, setForums] = useState<ForumType[]>();
+    const [startIndex, setStartIndex] = useState(0);
+    const [searchText, setSearchText] = useState('');
+
+    const handleStartIndexChange = (newStartIndex: number) => {
+        setStartIndex(newStartIndex);
+    };
 
     const fetchTopics = (): boolean => {
         getAllForums()
@@ -152,22 +159,34 @@ export const Main = () => {
         return true;
     };
 
+    const searchTopics = (text): boolean => {
+        searchTopic(text)
+            .then((response) => {
+                setForums(response);
+            })
+            .catch( (err) => console.log("Error in fetch profile", err));
+        return true;
+    };
+
     useEffect(() => {
         fetchTopics();
     }, []);
+
+    // Get a slice of three forums starting from the startIndex
+    const displayedForums = forums ? forums.slice(startIndex, startIndex + 3) : [];
+
     return (
         <main role="main">
-            <SearchSection />
+            <SearchSection startIndex={startIndex} onStartIndexChange={handleStartIndexChange} />
             <div className="post_results rows" id="allFeed">
-                {forums ? (
-                    forums.map((post, index) => (
+                {displayedForums.length > 0 ? (
+                    displayedForums.map((post, index) => (
                         <PostResult key={index} currentForum={post} />
                     ))
                 ) : (
-                    <p>Loading...</p>
+                    <p>No forums to display.</p>
                 )}
             </div>
-
         </main>
     );
 };

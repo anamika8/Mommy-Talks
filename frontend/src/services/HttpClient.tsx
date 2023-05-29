@@ -78,3 +78,21 @@ export async function getForumById(id) {
         });
     return null;
 }
+
+export async function searchTopic(title: string): Promise<ForumType[]> {
+    const data = JSON.stringify({
+        "title": title
+    });
+
+    const config = {
+        method: 'search',
+        maxBodyLength: Infinity,
+        url: `${serverUrl}/topics`,
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data : data
+    };
+    const response = await axios.request(config);
+    return response.data as ForumType[];
+}

@@ -15,6 +15,18 @@ export function ForumRoutesInit(app: FastifyInstance) {
 		}
 	});
 
+	// search topics by title
+	app.search<{ Body: { forum_title: string } }>("/topics", async (req, reply) => {
+		const { title } = req.body;
+
+		try {
+			const topics = await req.em.find(Forum, { title: { $ilike: `%${title}%` }, deleted_at: null });
+			return reply.send(topics);
+		} catch (err) {
+			return reply.status(500).send({ message: err.message });
+		}
+	});
+
 	app.search<{ Body: { forum_id: number } }>("/forums/id", async (req, reply) => {
 		const { id } = req.body;
 
