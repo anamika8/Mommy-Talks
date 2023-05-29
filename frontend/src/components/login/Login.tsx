@@ -81,7 +81,7 @@ export const LoginForm = () => {
                     />
                 </label>
                 <label htmlFor="password">
-                    Your Password:
+                    Password:
                     <input
                         id="password"
                         type="password"
