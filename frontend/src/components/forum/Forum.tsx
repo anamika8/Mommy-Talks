@@ -83,11 +83,23 @@ const FontawesomeScript = () => {
 
     return null;
 };
-const SearchSection = ({ startIndex, onStartIndexChange }: { startIndex: number; onStartIndexChange: (newStartIndex: number) => void }) => {
+const SearchSection = ({
+                           startIndex,
+                           onStartIndexChange,
+                           searchText,
+                           onSearchTextChange
+                       }: {
+                        startIndex: number;
+                        onStartIndexChange: (newStartIndex: number) => void;
+                        searchText: string;
+                        onSearchTextChange: (newSearchText: string) => void;
+}) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const handleChange = (event) => {
         setSearchTerm(event.target.value);
+        const newSearchText = event.target.value;
+        onSearchTextChange(newSearchText);
     };
 
     const handleSubmit = (event) => {
@@ -150,6 +162,10 @@ export const Main = () => {
         setStartIndex(newStartIndex);
     };
 
+    const handleSearchTextChange = (newSearchText: string) => {
+        setSearchText(newSearchText);
+    };
+
     const fetchTopics = (): boolean => {
         getAllForums()
             .then((response) => {
@@ -169,15 +185,23 @@ export const Main = () => {
     };
 
     useEffect(() => {
-        fetchTopics();
-    }, []);
+        if (searchText == '')
+            fetchTopics();
+        else
+            searchTopics(searchText);
+    }, [searchText]);
 
     // Get a slice of three forums starting from the startIndex
     const displayedForums = forums ? forums.slice(startIndex, startIndex + 3) : [];
 
     return (
         <main role="main">
-            <SearchSection startIndex={startIndex} onStartIndexChange={handleStartIndexChange} />
+            <SearchSection
+                startIndex={startIndex}
+                onStartIndexChange={handleStartIndexChange}
+                searchText={searchText}
+                onSearchTextChange={handleSearchTextChange}
+            />
             <div className="post_results rows" id="allFeed">
                 {displayedForums.length > 0 ? (
                     displayedForums.map((post, index) => (
