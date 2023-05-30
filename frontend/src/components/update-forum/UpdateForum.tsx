@@ -87,7 +87,13 @@ const Form = ({ currentForumId, handleTitleChange, handleContentChange, title, c
     );
 };
 
-const Comment = ({ handleCommentChange, handleCommentSubmit, comment }) => {
+const Comment = ({ handleCommentChange, comment }) => {
+    const handleCommentSubmit = (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            console.log('Comment posted:', comment);
+        }
+    };
     return (
         <div id="all-comment">
             <div className="comment_log colm-4 border" id="defaultCommentBox">
@@ -156,14 +162,6 @@ export const MainComponent = ({currentForumId}) => {
         setComment(event.target.value);
     };
 
-    const handleCommentSubmit = (event) => {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            setComment('');
-            console.log('Comment posted:', comment);
-        }
-    };
-
     return (
         <main role="main">
             <Form
@@ -176,7 +174,6 @@ export const MainComponent = ({currentForumId}) => {
             />
             <Comment
                 handleCommentChange={handleCommentChange}
-                handleCommentSubmit={handleCommentSubmit}
                 comment={comment}
             />
         </main>
