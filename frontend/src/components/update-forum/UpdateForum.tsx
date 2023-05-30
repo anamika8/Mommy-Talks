@@ -18,19 +18,34 @@ export const UpdateForum = () => {
 };
 
 const Form = ({ currentForumId, handleTitleChange, handleContentChange, title, content, username }) => {
+    const navigate = useNavigate();
     const handleUpdate = (event) => {
         event.preventDefault();
         console.log('Update Submitted:', title, content);
         ForumService.update(currentForumId, title, content)
             .then((response) => {
-                console.log(`Successful update : ${response}`);
+                console.log(`Successful update`);
             })
             .catch(err => {
                 console.error(err);
             });
     };
+
+    const handleDelete = (event) => {
+        event.preventDefault();
+        console.log('Update Submitted:', title, content);
+        ForumService.delete(currentForumId)
+            .then((response) => {
+                console.log(`Successful delete`);
+                navigate("/forum");
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    };
+
     return (
-        <form onSubmit={handleUpdate} id="query-form">
+        <form id="query-form">
             <p>
                 <input
                     type="text"
@@ -63,7 +78,7 @@ const Form = ({ currentForumId, handleTitleChange, handleContentChange, title, c
                     </button>
                 </div>
                 <div className="inner">
-                    <button type="button" name="submit" id="deletePost">
+                    <button type="button" name="submit" id="deletePost" onClick={handleDelete}>
                         Delete
                     </button>
                 </div>
@@ -135,23 +150,6 @@ export const MainComponent = ({currentForumId}) => {
 
     const handleContentChange = (event) => {
         setContent(event.target.value);
-    };
-
-    const handleUpdate = (event) => {
-        event.preventDefault();
-        console.log('Update Submitted:', title, content);
-        ForumService.update(currentForumId, title, content)
-            .then((response) => {
-                console.log(`Successful update : ${response}`);
-            })
-            .catch(err => {
-                console.error(err);
-            });
-    };
-
-    const handleDelete = (event) => {
-        event.preventDefault();
-        console.log('Deleted');
     };
 
     const handleCommentChange = (event) => {

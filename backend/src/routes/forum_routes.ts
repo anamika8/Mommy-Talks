@@ -123,35 +123,25 @@ export function ForumRoutesInit(app: FastifyInstance) {
 	});
 
 	// DELETE
-	app.delete<{Body: { forumId: string, password: string }}>("/forum", async(req, reply) => {
-		const { forumId, password} = req.body;
+	app.delete<{Body: { forumId: string}}>("/forum", async(req, reply) => {
+		const { forumId} = req.body;
 		const id = parseInt(forumId);
-
-		const admin_password = process.env.ADMIN_PASSWORD;
-		if (admin_password === password) {
-			try {
-				// using reference is enough, no need for a fully initialized entity
-				const forumToDelete = await req.em.findOne(Forum, { id, "deleted_at": null });
-				if (forumToDelete !== null) {
-					forumToDelete.deleted_at = new Date();
-					console.log(forumToDelete);
-					//soft delete
-					await req.em.flush();
-					reply.send(forumToDelete);
-				} else {
-					// send 500 error if message id is not present
-					return reply.status(500).send(`No messages to delete`);
-				}
-			} catch (err) {
-				console.error(err);
-				reply.status(500).send(err);
+		try {
+			// using reference is enough, no need for a fully initialized entity
+			const forumToDelete = await req.em.findOne(Forum, { id, "deleted_at": null });
+			if (forumToDelete !== null) {
+				forumToDelete.deleted_at = new Date();
+				console.log(forumToDelete);
+				//soft delete
+				await req.em.flush();
+				reply.send(forumToDelete);
+			} else {
+				// send 500 error if message id is not present
+				return reply.status(500).send(`No messages to delete`);
 			}
-		} else {
-			const errorMessage = "Incorrect Admin Password";
-			console.error(errorMessage);
-			reply.status(401).send({
-				message: errorMessage
-			});
+		} catch (err) {
+			console.error(err);
+			reply.status(500).send(err);
 		}
 	});
 }

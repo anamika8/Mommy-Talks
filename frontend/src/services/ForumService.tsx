@@ -7,5 +7,9 @@ export const ForumService = {
 
     async update(forumId: string, title: string, content: string) {
         return httpClient.put("/forum", { forumId, title, content});
+    },
+
+    async delete (forumId: string) {
+        return httpClient.delete("/forum", { data: { forumId } });
     }
 };
