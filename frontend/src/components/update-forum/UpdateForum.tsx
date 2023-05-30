@@ -11,6 +11,147 @@ export const UpdateForum = () => {
         </div>
     );
 };
+
+const Form = ({ handleUpdate, handleDelete, handleTitleChange, handleContentChange, title, content }) => {
+    return (
+        <form action="/query" method="post" id="query-form">
+            <p>
+                <input
+                    type="text"
+                    name="title"
+                    id="title"
+                    placeholder="Title"
+                    onChange={handleTitleChange}
+                    value={title}
+                />
+            </p>
+            <div id="content-section" className="colm-4">
+                <p>
+          <textarea
+              name="content"
+              id="mt-editor"
+              placeholder="Content"
+              onChange={handleContentChange}
+              value={content}>
+          </textarea>
+                </p>
+                <span id="user-info">
+          <i className="fa fa-user-circle-o" aria-hidden="true"></i> User: Test Mommy
+        </span>
+            </div>
+            <br />
+            <div id="outer">
+                <div className="inner">
+                    <button type="button" name="submit" id="updatePost" onClick={handleUpdate}>
+                        Update
+                    </button>
+                </div>
+                <div className="inner">
+                    <button type="button" name="submit" id="deletePost" onClick={handleDelete}>
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </form>
+    );
+};
+
+const Comment = ({ handleCommentChange, handleCommentChangeSubmit, comment }) => {
+    return (
+        <div className="rows" id="all-comment">
+            <div className="comment_log colm-4 border" id="defaultCommentBox">
+                <input
+                    type="text"
+                    name="comment"
+                    className="colm-4"
+                    id="newComment"
+                    placeholder="Write your comment"
+                    onChange={handleCommentChange}
+                    value={comment}
+                    onKeyDown={handleCommentChangeSubmit}
+                />
+                <span className="user">
+          <i className="fa fa-user-circle-o" aria-hidden="true"></i> User: Test Mommy
+        </span>
+            </div>
+        </div>
+    );
+};
+
+export const MainComponent = () => {
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+    const [comment, setComment] = useState('');
+    const [submitFailed, setSubmitFailed] = useState(false);
+
+    const handleTitleChange = (event) => {
+        if (!submitFailed) {
+            setTitle(event.target.value);
+        }
+    };
+
+    const handleContentChange = (event) => {
+        if (!submitFailed) {
+            setContent(event.target.value);
+        }
+    };
+    const handleUpdate = (event) => {
+        // Handle update logic here
+        event.preventDefault();
+        console.log("Submitted:", title, content);
+
+        setTitle("");
+        setContent("");
+        setSubmitFailed(true);
+
+    };
+
+    const handleDelete = (event) => {
+        // Handle delete logic here
+        event.preventDefault();
+        console.log("Deleted");
+    };
+
+    const handleCommentChange = (event) => {
+        setComment(event.target.value);
+    };
+
+    const handleCommentChangeSubmit = (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+
+            // Handle comment submission logic here
+            // e.g., Post the comment to the server
+
+            // Reset the comment input
+            setComment('');
+
+            // Log the comment
+            console.log('Comment posted:', comment);
+        }
+    };
+
+    return (
+        <main role="main">
+            <Form
+                handleUpdate={handleUpdate}
+                handleDelete={handleDelete}
+                handleTitleChange={handleTitleChange}
+                handleContentChange={handleContentChange}
+                title={title}
+                content={content}
+            />
+            <Comment
+                handleCommentChange={handleCommentChange}
+                handleCommentChangeSubmit={handleCommentChangeSubmit}
+                comment={comment}
+            />
+        </main>
+    );
+};
+
+
+/*
 export const MainComponent = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
@@ -126,7 +267,7 @@ export const MainComponent = () => {
         </main>
     );
 };
-
+*/
 export const Header = () => {
     const navigate = useNavigate();
 
