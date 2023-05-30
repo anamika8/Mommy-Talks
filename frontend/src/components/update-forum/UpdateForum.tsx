@@ -1,20 +1,36 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 import symbol from "@/components/forum/logo.jpg";
 import "./update-forum.css";
+import {getForumById, getProfileById, searchTopic} from "@/services/HttpClient.tsx";
+import {ForumService} from "@/services/ForumService.tsx";
 export const UpdateForum = () => {
+    const location = useLocation();
+    const currentForumId = location.state.forumId;
     return (
         <div>
             <Header />
-            <MainComponent />
+            <MainComponent currentForumId={currentForumId}/>
             <FontawesomeScript />
         </div>
     );
 };
 
-const Form = ({ handleSubmit, handleTitleChange, handleContentChange, title, content }) => {
+const Form = ({ currentForumId, handleTitleChange, handleContentChange, title, content, username }) => {
+    const handleUpdate = (event) => {
+        event.preventDefault();
+        console.log('Update Submitted:', title, content);
+        ForumService.update(currentForumId, title, content)
+            .then((response) => {
+                console.log(`Successful update : ${response}`);
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    };
     return (
-        <form onSubmit={handleSubmit} id="query-form">
+        <form onSubmit={handleUpdate} id="query-form">
             <p>
                 <input
                     type="text"
@@ -36,13 +52,13 @@ const Form = ({ handleSubmit, handleTitleChange, handleContentChange, title, con
           />
                 </p>
                 <span id="user-info">
-          <i className="fa fa-user-circle-o" aria-hidden="true" /> User: Test Mommy
+          <i className="fa fa-user-circle-o" aria-hidden="true" /> User: {username}
         </span>
             </div>
             <br />
             <div id="outer">
                 <div className="inner">
-                    <button type="button" name="submit" id="updatePost">
+                    <button type="button" name="submit" id="updatePost" onClick={handleUpdate}>
                         Update
                     </button>
                 </div>
@@ -78,10 +94,40 @@ const Comment = ({ handleCommentChange, handleCommentSubmit, comment }) => {
     );
 };
 
-export const MainComponent = () => {
+export const MainComponent = ({currentForumId}) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [comment, setComment] = useState('');
+    const [userId, setUserId] = useState(0);
+    const [username, setUsername] = useState('');
+
+    const populateForumDetails = (currentForumId): void => {
+        getForumById(currentForumId)
+            .then((response) => {
+                setTitle(response.title);
+                setContent(response.content);
+                setUserId(response.user);
+            })
+            .catch( (err) => console.log("Error in fetch profile", err));
+    };
+
+    const getUsername = (userId): void => {
+        getProfileById(userId)
+            .then((response) => {
+                const theUserName = `${response.first_name} ${response.last_name}`;
+                setUsername(theUserName);
+            })
+            .catch( (err) => console.log("Error in fetch profile", err));
+    };
+
+    useEffect(() => {
+        populateForumDetails(currentForumId);
+    }, [currentForumId]);
+
+    useEffect(() => {
+        if (userId > 0)
+            getUsername(userId);
+    }, [userId]);
 
     const handleTitleChange = (event) => {
         setTitle(event.target.value);
@@ -93,9 +139,14 @@ export const MainComponent = () => {
 
     const handleUpdate = (event) => {
         event.preventDefault();
-        console.log('Submitted:', title, content);
-        setTitle('');
-        setContent('');
+        console.log('Update Submitted:', title, content);
+        ForumService.update(currentForumId, title, content)
+            .then((response) => {
+                console.log(`Successful update : ${response}`);
+            })
+            .catch(err => {
+                console.error(err);
+            });
     };
 
     const handleDelete = (event) => {
@@ -118,11 +169,12 @@ export const MainComponent = () => {
     return (
         <main role="main">
             <Form
-                handleSubmit={handleUpdate}
+                currentForumId={currentForumId}
                 handleTitleChange={handleTitleChange}
                 handleContentChange={handleContentChange}
                 title={title}
                 content={content}
+                username={username}
             />
             <Comment
                 handleCommentChange={handleCommentChange}
@@ -133,124 +185,6 @@ export const MainComponent = () => {
     );
 };
 
-
-/*
-export const MainComponent = () => {
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
-    const [comment, setComment] = useState('');
-    const [submitFailed, setSubmitFailed] = useState(false);
-
-    const handleTitleChange = (event) => {
-        if (!submitFailed) {
-            setTitle(event.target.value);
-        }
-    };
-
-    const handleContentChange = (event) => {
-        if (!submitFailed) {
-            setContent(event.target.value);
-        }
-    };
-    const handleUpdate = (event) => {
-        // Handle update logic here
-        event.preventDefault();
-        console.log("Submitted:", title, content);
-
-        setTitle("");
-        setContent("");
-        setSubmitFailed(true);
-
-    };
-
-    const handleDelete = (event) => {
-        // Handle delete logic here
-        event.preventDefault();
-        console.log("Deleted");
-    };
-
-    const handleCommentChange = (event) => {
-        setComment(event.target.value);
-    };
-
-    const handleCommentChangeSubmit = (event) => {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-
-            // Handle comment submission logic here
-            // e.g., Post the comment to the server
-
-            // Reset the comment input
-            setComment('');
-
-            // Log the comment
-            console.log('Comment posted:', comment);
-        }
-    };
-
-    return (
-        <main role="main">
-            <form action="/query" method="post" id="query-form">
-                <p>
-                    <input
-                        type="text"
-                        name="title"
-                        id="title"
-                        placeholder="Title"
-                        onChange={handleTitleChange}
-                        value={title}
-                    />
-                </p>
-                <div id="content-section" className="colm-4">
-                    <p>
-                        <textarea
-                            name="content"
-                            id="mt-editor"
-                            placeholder="Content"
-                            onChange={handleContentChange}
-                            value={content}>
-                        </textarea>
-                    </p>
-                    <span id="user-info">
-                        <i className="fa fa-user-circle-o" aria-hidden="true"></i> User: Test Mommy
-                    </span>
-                </div>
-                <br />
-                <div id="outer">
-                    <div className="inner">
-                        <button type="button" name="submit" id="updatePost" onClick={handleUpdate}>
-                            Update
-                        </button>
-                    </div>
-                    <div className="inner">
-                        <button type="button" name="submit" id="deletePost" onClick={handleDelete}>
-                            Delete
-                        </button>
-                    </div>
-                </div>
-            </form>
-
-            <div className="rows" id="all-comment">
-                <div className="comment_log colm-4 border" id="defaultCommentBox">
-                    <input
-                        type="text"
-                        name="comment"
-                        className="colm-4"
-                        id="newComment"
-                        placeholder="Write your comment"
-                        onChange={handleCommentChange}
-                        value={comment}
-                        onKeyDown={handleCommentChangeSubmit}
-                    />
-                    <span className="user">
-                        <i className="fa fa-user-circle-o" aria-hidden="true"></i> User: Test Mommy
-                    </span>
-                </div>
-            </div>
-        </main>
-    );
-};
-*/
 export const Header = () => {
     const navigate = useNavigate();
 

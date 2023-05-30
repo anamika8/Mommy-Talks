@@ -24,7 +24,7 @@ export const Header = () => {
         localStorage.removeItem('accessToken'); // Remove access token from local storage
 
         // Redirect to login page or home page
-        navigate('/login');
+        navigate('/');
     };
 
     const handleCreatePost = (event) => {
@@ -146,9 +146,13 @@ const PostResult = ({ currentForum }: { currentForum: ForumType }) => {
     const navigate = useNavigate();
     const handleMoreInfo = () => {
         const forumId = currentForum.id.toString();
-        localStorage.setItem('forumId', forumId);
+        //localStorage.setItem('forumId', forumId);
         console.log('Details page forum id: ' + forumId);
-        navigate('/update-forum');
+        navigate('/update-forum', {
+            state:{
+                forumId: forumId
+            }
+        });
     };
 
     return (

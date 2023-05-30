@@ -4,10 +4,15 @@ export type State = {
 }
 
 export type ProfileType = {
-	firstName: string,
-	lastName: string,
+	first_name: string,
+	last_name: string,
 	email: string,
 	id: number,
+	password: string,
+	last_login: string,
+	created_at: string,
+	updated_at: string,
+	deleted_at: string,
 }
 
 export type ForumType = {

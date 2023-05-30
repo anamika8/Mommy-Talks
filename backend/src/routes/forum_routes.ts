@@ -31,7 +31,7 @@ export function ForumRoutesInit(app: FastifyInstance) {
 		const { id } = req.body;
 
 		try {
-			const forumEntity = await req.em.find(Forum, {id, deleted_at: null});
+			const forumEntity = await req.em.findOne(Forum, {id, deleted_at: null});
 			return reply.send(forumEntity);
 		} catch (err) {
 			return reply.status(500).send({ message: err.message });

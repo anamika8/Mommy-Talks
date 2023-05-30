@@ -1,5 +1,5 @@
 import axios from "axios";
-import {ForumType} from "@/ProfileTypes.ts";
+import {ForumType, ProfileType} from "@/ProfileTypes.ts";
 
 const serverIP = import.meta.env.VITE_API_HOST;
 const serverPort = import.meta.env.VITE_PORT;
@@ -13,11 +13,11 @@ export const httpClient = axios.create({
     },
 });
 
-export async function getProfileById(id) {
+export async function getProfileById(id): Promise<ProfileType> {
     const data = JSON.stringify({
-        "id": id
+        "id": parseInt(id)
     });
-
+    console.log(data);
     const config = {
         method: 'search',
         maxBodyLength: Infinity,
@@ -27,15 +27,14 @@ export async function getProfileById(id) {
         },
         data : data
     };
-
-    axios.request(config)
-        .then((response) => {
-            return response.data;
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-    return null;
+    try {
+        const response = await axios.request(config);
+        console.log(response.data);
+        return response.data as ProfileType;
+    } catch (error) {
+        console.log(error);
+        throw error; // Optionally, you can rethrow the error to handle it higher up the call stack
+    }
 }
 
 export async function getAllForums(): Promise<ForumType[]> {
@@ -54,7 +53,7 @@ export async function getAllForums(): Promise<ForumType[]> {
     }
 }
 
-export async function getForumById(id) {
+export async function getForumById(id): Promise<ForumType> {
     const data = JSON.stringify({
         "id": id
     });
@@ -62,21 +61,15 @@ export async function getForumById(id) {
     const config = {
         method: 'search',
         maxBodyLength: Infinity,
-        url: `${serverUrl}/forums`,
+        url: `${serverUrl}/forums/id`,
         headers: {
             'Content-Type': 'application/json'
         },
         data : data
     };
 
-    axios.request(config)
-        .then((response) => {
-            return response.data;
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-    return null;
+    const response = await axios.request(config);
+    return response.data as ForumType;
 }
 
 export async function searchTopic(title: string): Promise<ForumType[]> {
