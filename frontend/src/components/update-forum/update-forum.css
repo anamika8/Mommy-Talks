@@ -442,3 +442,14 @@ span.comment {
 }
 
 }
+
+@media only screen and (max-width: 3000px) and (min-width: 2000px){
+.inner {
+    width: 9%;
+}
+
+#user-info {
+    margin-right:34%;
+}
+
+}

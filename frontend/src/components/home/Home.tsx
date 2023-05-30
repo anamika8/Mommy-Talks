@@ -97,8 +97,8 @@ const Footer = () => (
     <footer role="contentinfo" className="footerInfo">
         <p>
             Demo Credentials: <br />
-            Email: email@email.com <br />
-            Password: password
+            Email: example@email.com <br />
+            Password: Welcome@1
         </p>
     </footer>
 );
