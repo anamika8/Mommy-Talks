@@ -9,6 +9,7 @@ export const CreateForum = () => {
         <div>
             <Header />
             <MainContent />
+            <Footer />
         </div>
     );
 };
@@ -130,5 +131,13 @@ export const Header = () => {
                 </div>
             </div>
         </header>
+    );
+};
+
+export const Footer = () => {
+    return (
+        <footer role="contentinfo" className="footerForum">
+            © 2023 created by Anamika
+        </footer>
     );
 };

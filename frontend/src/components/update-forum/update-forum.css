@@ -96,7 +96,7 @@ div {
     background-color:#f1f1f1;
     border:1.5px solid rgb(169, 169, 169);
     width: 800px; 
-    height: 180px;
+    height: 18vh;
     overflow-y: auto;
     overflow-x: hidden; 
 
@@ -226,6 +226,7 @@ span.comment {
 
 span.user {
   margin: 10px auto;
+    margin-top: -2%;
   border: 0;
   padding: 0;
   display: block;
@@ -241,7 +242,7 @@ span.user {
   font-size: 15px;
 }
 
-.footer {
+.footerForum{
   color:	#484848;
   margin: 10px auto;
   border: 0;
@@ -433,7 +434,7 @@ span.comment {
     font-size: 1.8rem; 
 }
 
-.footer {
+.footerForum {
   font-size: 20px;
 }
 
@@ -442,6 +443,7 @@ span.comment {
 }
 
 }
+
 
 @media only screen and (max-width: 3000px) and (min-width: 2000px){
 .inner {
@@ -452,4 +454,11 @@ span.comment {
     margin-right:34%;
 }
 
+#title {
+    font-size: 30px;
+}
+
+body {
+    font-size: 30px;
+}
 }

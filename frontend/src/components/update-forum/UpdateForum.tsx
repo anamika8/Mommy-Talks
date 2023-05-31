@@ -13,6 +13,7 @@ export const UpdateForum = () => {
         <div>
             <Header />
             <MainComponent currentForumId={currentForumId}/>
+            <Footer />
             <FontawesomeScript />
         </div>
     );
@@ -274,6 +275,14 @@ export const Header = () => {
                 </div>
             </div>
         </header>
+    );
+};
+
+export const Footer = () => {
+    return (
+        <footer role="contentinfo" className="footerForum">
+            © 2023 created by Anamika
+        </footer>
     );
 };
 const FontawesomeScript = () => {
