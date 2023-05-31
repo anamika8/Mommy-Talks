@@ -170,6 +170,11 @@ div.post_log {
     padding-right: 1.04166666%;
 }
 
+.inactiveLink {
+    pointer-events: none;
+    cursor: default;
+}
+
 span.result {
     display: block;
     font-size: 1rem;

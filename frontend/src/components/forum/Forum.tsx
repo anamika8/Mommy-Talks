@@ -85,13 +85,13 @@ const FontawesomeScript = () => {
 };
 const SearchSection = ({
                            startIndex,
+                           forumCount,
                            onStartIndexChange,
-                           searchText,
                            onSearchTextChange
                        }: {
                         startIndex: number;
+                        forumCount: number;
                         onStartIndexChange: (newStartIndex: number) => void;
-                        searchText: string;
                         onSearchTextChange: (newSearchText: string) => void;
 }) => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -111,13 +111,14 @@ const SearchSection = ({
     };
 
     const handleNextClick = () => {
-        console.log("click next");
-        onStartIndexChange(startIndex + 3);
+        if (startIndex < forumCount) {
+            onStartIndexChange(startIndex + 3);
+        }
+        console.log(`startIndex = ${startIndex}, forumCount = ${forumCount}`);
     };
 
-    const handlePrevClick = () => {
-       console.log("click prev");
-       if (startIndex - 3 >= 0) {
+    const handlePrevClick = (event) => {
+        if (startIndex - 3 >= 0) {
            onStartIndexChange(startIndex - 3);
        }
     };
@@ -136,8 +137,20 @@ const SearchSection = ({
             </div>
 
             <div className="pages">
-                <a className="pages-button" id="prev" onClick={handlePrevClick}>&lt; Prev</a>
-                <a className="pages-button" id="next" onClick={handleNextClick}>Next &gt;</a>
+                <a
+                    className={`pages-button ${startIndex <= 0 ? 'inactiveLink' : ''}`}
+                    id="prev"
+                    onClick={handlePrevClick}
+                >
+                    &lt; Prev
+                </a>
+                <a
+                    className={`pages-button ${startIndex + 3 >= forumCount ? 'inactiveLink' : ''}`}
+                    id="next"
+                    onClick={handleNextClick}
+                >
+                    Next &gt;
+                </a>
             </div>
         </div>
     );
@@ -146,8 +159,6 @@ const PostResult = ({ currentForum }: { currentForum: ForumType }) => {
     const navigate = useNavigate();
     const handleMoreInfo = () => {
         const forumId = currentForum.id.toString();
-        //localStorage.setItem('forumId', forumId);
-        console.log('Details page forum id: ' + forumId);
         navigate('/update-forum', {
             state:{
                 forumId: forumId
@@ -165,7 +176,7 @@ const PostResult = ({ currentForum }: { currentForum: ForumType }) => {
 };
 
 export const Main = () => {
-    const [forums, setForums] = useState<ForumType[]>();
+    const [forums, setForums] = useState<ForumType[]>([]);
     const [startIndex, setStartIndex] = useState(0);
     const [searchText, setSearchText] = useState('');
 
@@ -209,8 +220,8 @@ export const Main = () => {
         <main role="main">
             <SearchSection
                 startIndex={startIndex}
+                forumCount={forums.length}
                 onStartIndexChange={handleStartIndexChange}
-                searchText={searchText}
                 onSearchTextChange={handleSearchTextChange}
             />
             <div className="post_results rows" id="allFeed">
