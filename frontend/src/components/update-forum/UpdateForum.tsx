@@ -5,6 +5,7 @@ import symbol from "@/components/forum/logo.jpg";
 import "./update-forum.css";
 import {getForumById, getForumComments, getProfileById, searchTopic} from "@/services/HttpClient.tsx";
 import {ForumService} from "@/services/ForumService.tsx";
+import {CommentService} from "@/services/CommentService.tsx";
 import {CommentType} from "@/ProfileTypes.ts";
 export const UpdateForum = () => {
     const location = useLocation();
@@ -118,11 +119,27 @@ const Comment = ({ comment, userId }) => {
     );
 };
 
-const NewComment = ({ username }) => {
+const NewComment = ({ username, forumId }) => {
+    const currentUserEmail = "email2@email.com";
+    const navigate = useNavigate();
     const handleCommentSubmit = (event) => {
         if (event.key === 'Enter') {
             event.preventDefault();
-            console.log('Comment posted:', event.target.value);
+            const newComment = event.target.value;
+            console.log('Comment posted:', newComment);
+            CommentService.send(currentUserEmail, forumId.toString(), newComment)
+                .then((response) => {
+                    console.log(`Successfully commented : ${response}`);
+                    navigate('/update-forum', {
+                        state:{
+                            forumId: forumId
+                        }
+                    });
+                    window.location.reload();
+                })
+                .catch(err => {
+                    console.error(err);
+                });
         }
     };
     return (
@@ -219,6 +236,7 @@ export const MainComponent = ({currentForumId}) => {
 
             <NewComment
                 username={username}
+                forumId={currentForumId}
             />
             </div>
         </main>
