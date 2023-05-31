@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
 import symbol from "@/components/forum/logo.jpg";
 import "./update-forum.css";
-import {getForumById, getProfileById, searchTopic} from "@/services/HttpClient.tsx";
+import {getForumById, getForumComments, getProfileById, searchTopic} from "@/services/HttpClient.tsx";
 import {ForumService} from "@/services/ForumService.tsx";
+import {CommentType} from "@/ProfileTypes.ts";
 export const UpdateForum = () => {
     const location = useLocation();
     const currentForumId = location.state.forumId;
@@ -87,28 +88,55 @@ const Form = ({ currentForumId, handleTitleChange, handleContentChange, title, c
     );
 };
 
-const Comment = ({ handleCommentChange, comment }) => {
+const Comment = ({ comment, userId }) => {
+    const [commenter, setCommenter] = useState('');
+    const getCommenter = (userId): void => {
+        getProfileById(userId)
+            .then((response) => {
+                const theUserName = `${response.first_name} ${response.last_name}`;
+                setCommenter(theUserName);
+            })
+            .catch( (err) => console.log("Error in fetch profile", err));
+    };
+    useEffect(() => {
+        getCommenter(userId);
+    }, [userId]);
+    return (
+            <div className="comment_log colm-4 border">
+                <input
+                    type="text"
+                    name="comment"
+                    className="colm-4"
+                    value={comment}
+                    disabled
+                />
+                <span className="user">
+          <i className="fa fa-user-circle-o" aria-hidden="true" /> User: {commenter}
+        </span>
+            </div>
+    );
+};
+
+const NewComment = ({ username }) => {
     const handleCommentSubmit = (event) => {
         if (event.key === 'Enter') {
             event.preventDefault();
-            console.log('Comment posted:', comment);
+            console.log('Comment posted:', event.target.value);
         }
     };
     return (
-        <div id="all-comment">
-            <div className="comment_log colm-4 border" id="defaultCommentBox">
+        <div id="new-comment">
+            <div className="comment_log colm-4 border" id="newCommentBox">
                 <input
                     type="text"
                     name="comment"
                     className="colm-4"
                     id="newComment"
                     placeholder="Write your comment"
-                    onChange={handleCommentChange}
-                    value={comment}
                     onKeyDown={handleCommentSubmit}
                 />
                 <span className="user">
-          <i className="fa fa-user-circle-o" aria-hidden="true" /> User: Test Mommy
+          <i className="fa fa-user-circle-o" aria-hidden="true" /> User: {username}
         </span>
             </div>
         </div>
@@ -118,7 +146,7 @@ const Comment = ({ handleCommentChange, comment }) => {
 export const MainComponent = ({currentForumId}) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [comment, setComment] = useState('');
+    const [comments, setComments] = useState<CommentType[]>([]);
     const [userId, setUserId] = useState(0);
     const [username, setUsername] = useState('');
 
@@ -129,7 +157,17 @@ export const MainComponent = ({currentForumId}) => {
                 setContent(response.content);
                 setUserId(response.user);
             })
-            .catch( (err) => console.log("Error in fetch profile", err));
+            .catch( (err) => console.log("Error in fetch forum", err));
+    };
+
+    const populateComments = (currentForumId): void => {
+        console.log("Getting all comments for forumId - ", currentForumId);
+        getForumComments(currentForumId)
+            .then((response) => {
+                console.log("Found comments - ", response.length);
+                setComments(response);
+            })
+            .catch( (err) => console.log("Error in fetch comments", err));
     };
 
     const getUsername = (userId): void => {
@@ -143,6 +181,7 @@ export const MainComponent = ({currentForumId}) => {
 
     useEffect(() => {
         populateForumDetails(currentForumId);
+        populateComments(currentForumId);
     }, [currentForumId]);
 
     useEffect(() => {
@@ -158,10 +197,6 @@ export const MainComponent = ({currentForumId}) => {
         setContent(event.target.value);
     };
 
-    const handleCommentChange = (event) => {
-        setComment(event.target.value);
-    };
-
     return (
         <main role="main">
             <Form
@@ -172,10 +207,19 @@ export const MainComponent = ({currentForumId}) => {
                 content={content}
                 username={username}
             />
-            <Comment
-                handleCommentChange={handleCommentChange}
-                comment={comment}
+            <div id="all-comment">
+                {comments.length > 0 ? (
+                    comments.map((eachComment, index) => (
+                        <Comment key={index} comment={eachComment.comment} userId={eachComment.user}/>
+                    ))
+                ) : (
+                    <p></p>
+                )}
+
+            <NewComment
+                username={username}
             />
+            </div>
         </main>
     );
 };

@@ -24,3 +24,14 @@ export type ForumType = {
 	title: string,
 	content: string,
 }
+
+export type CommentType = {
+	id: number,
+	created_at: string,
+	updated_at: string,
+	deleted_at: string,
+	user: number,
+	forumId: number,
+	comment: string,
+	deleted: boolean,
+}

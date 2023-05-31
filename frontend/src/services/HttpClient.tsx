@@ -1,5 +1,5 @@
 import axios from "axios";
-import {ForumType, ProfileType} from "@/ProfileTypes.ts";
+import {CommentType, ForumType, ProfileType} from "@/ProfileTypes.ts";
 
 const serverIP = import.meta.env.VITE_API_HOST;
 const serverPort = import.meta.env.VITE_PORT;
@@ -29,7 +29,6 @@ export async function getProfileById(id): Promise<ProfileType> {
     };
     try {
         const response = await axios.request(config);
-        console.log(response.data);
         return response.data as ProfileType;
     } catch (error) {
         console.log(error);
@@ -88,4 +87,22 @@ export async function searchTopic(title: string): Promise<ForumType[]> {
     };
     const response = await axios.request(config);
     return response.data as ForumType[];
+}
+
+export async function getForumComments(forumId: number): Promise<CommentType[]> {
+    const data = JSON.stringify({
+        "id": forumId
+    });
+
+    const config = {
+        method: 'search',
+        maxBodyLength: Infinity,
+        url: `${serverUrl}/comments/id`,
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data : data
+    };
+    const response = await axios.request(config);
+    return response.data as CommentType[];
 }
