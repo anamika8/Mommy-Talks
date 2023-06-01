@@ -37,6 +37,7 @@
     "db:reset": "Completely updates our database to match our source code"
   },
   "dependencies": {
+    "@fastify/cors": "^8.2.1",
     "@mikro-orm/cli": "5.7.2",
     "@mikro-orm/core": "5.7.2",
     "@mikro-orm/migrations": "5.7.2",
@@ -44,11 +45,11 @@
     "@mikro-orm/reflection": "5.7.2",
     "@mikro-orm/seeder": "5.7.2",
     "axios": "^1.4.0",
-    "dotenv": "^16.0.3",
     "cross-env": "^7.0.3",
+    "dotenv": "^16.0.3",
     "fastify": "^4.15.0",
-    "@fastify/cors": "^8.2.1",
     "fastify-plugin": "^4.5.0",
+    "firebase": "^9.22.1",
     "mikro-orm-soft-delete": "^0.1.0"
   },
   "devDependencies": {
