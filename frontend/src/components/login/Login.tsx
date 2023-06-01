@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import symbol from './logo.jpg';
+import { loginWithEmailAndPassword } from "@/services/Auth.tsx";
 import "./login.css";
 
 export const Login = () => {
@@ -16,10 +17,11 @@ export const Login = () => {
 export const Header = () => {
     return (
         <header role="banner">
-            <img src={symbol} alt="caption" className="symbol"/>
+            <img src={symbol} alt="caption" className="symbol" />
         </header>
     );
 };
+
 export const Main = () => {
     return (
         <main role="main">
@@ -27,11 +29,17 @@ export const Main = () => {
         </main>
     );
 };
+
 export const LoginForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [submitFailed, setSubmitFailed] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
+
+    useEffect(() => {
+        setErrorMessage("");
+    }, [email, password]);
 
     const handleEmailChange = (event) => {
         if (!submitFailed) {
@@ -45,30 +53,29 @@ export const LoginForm = () => {
         }
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log("Submitted:", email, password);
-
-        // Save user email in local storage
-        localStorage.setItem("email", email);
-        localStorage.setItem("password", password);
-
-        setEmail("");
-        setPassword("");
         setSubmitFailed(true);
 
-        // Navigate to a different page after submission
-        navigate("/signup");
+        try {
+            await loginWithEmailAndPassword(email, password);
+            localStorage.setItem('email', email);
+            setEmail("");
+            setPassword("");
+            navigate("/signup");
+        } catch (error) {
+            const errorMessage = error.message;
+            setErrorMessage(errorMessage);
+            console.log(error);
+        }
     };
-
 
     return (
         <form onSubmit={handleSubmit} className="login-form">
             <fieldset name="Login">
                 <legend>Login</legend>
-                <label htmlFor="errorMessage" id="errorMessage" className="hidden errorMessage">
-                </label>
-                <br/>
+                {errorMessage && <label htmlFor="errorMessage" id="errorMessage" className="errorMessage">{errorMessage}</label>}
+                <br />
                 <label htmlFor="email">
                     Email:
                     <input
