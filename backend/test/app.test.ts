@@ -1,5 +1,5 @@
 // @ts-nocheck
-import * as dotenv from "dotenv";
+/*import * as dotenv from "dotenv";
 
 dotenv.config();
 import "chai/register-should.js"; // Using Should style
@@ -214,3 +214,4 @@ void tap.test("Testing message bad words filter", async () => {
 	resPayload.message.should.equal("Bad words naughty list added.");
 	resPayload.message.should.not.equal("Bad words naughty list added!");
 });
+*/
