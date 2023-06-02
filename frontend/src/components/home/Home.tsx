@@ -65,6 +65,7 @@ const SignupButton = () => {
 const Main = () => (
     <main role="main">
         <div className="app-first-page">
+            <h1 className="app-title">Mommy Talks</h1>
             <h2 className="theme">Moms will not feel alone here !!!</h2>
             <p className="theme-details">
                 A place for new, upcoming and experienced mothers to share their concern, get helpful suggestions.

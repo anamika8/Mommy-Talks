@@ -108,7 +108,6 @@ void tap.test("GET /users with ID should return a specific user", async () => {
     response.statusCode.should.equal(200);
 
     const user = JSON.parse(response.body);
-    console.log(user);
     const foundUser = user.find((u) => u.id === userId);
     foundUser.should.exist;
     foundUser.id.should.equal(userId);

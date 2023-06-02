@@ -10,11 +10,26 @@ body * {
     box-sizing: border-box;
 
 }
-
+/*
 html {
-    background-image: url("mt-background-com.jpg");
+    background-image: url('../.././assets/images/mt-background-com.jpg');
     background-repeat : no-repeat;
     background-size : cover;
+}*/
+
+.app-title {
+    font-family: "Roboto", helvetica, sans-serif, cursive;
+    font-size: 2.2em;
+    color: #565656; /* Updated text color */
+    text-shadow: 2px 2px 4px #000000; /* Updated text shadow color */
+    font-weight:500 ;
+
+    /* Flexbox properties */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* Add any additional styles or effects here */
 }
 
 .js-container {
