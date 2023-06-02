@@ -50,6 +50,7 @@
     "fastify": "^4.15.0",
     "fastify-plugin": "^4.5.0",
     "firebase": "^9.22.1",
+    "firebase-admin": "^11.9.0",
     "mikro-orm-soft-delete": "^0.1.0"
   },
   "devDependencies": {

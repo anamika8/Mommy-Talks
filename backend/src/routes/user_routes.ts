@@ -2,8 +2,33 @@ import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { SOFT_DELETABLE_FILTER } from "mikro-orm-soft-delete";
 import { User, UserRole } from "../db/entities/User.js";
 import { ICreateUsersBody, IUpdateUsersBody } from "../types.js";
+import admin from 'firebase-admin';
+//import * as serviceAccount from "../../src/mommy-talks-firebase-service-key.json";
+import fs from "fs";
+
 
 export function UserRoutesInit(app: FastifyInstance) {
+	// Read the Firebase service key JSON file
+	const serviceAccount = JSON.parse(fs.readFileSync('src/mommy-talks-firebase-service-key.json', 'utf8'));
+
+	admin.initializeApp({
+		credential: admin.credential.cert(serviceAccount as admin.ServiceAccount)
+	});
+
+	app.post<{ Body: ICreateUsersBody }>("/signup", async (req, reply) => {
+		const { first_name, last_name, email, password } = req.body;
+		try {
+			const user = await admin.auth().createUser({
+				email,
+				password,
+			});
+
+			reply.send({ userId: user.uid });
+		} catch (error) {
+			reply.code(400).send({ error: error.message });
+		}
+	});
+
 	// Route that returns all users, soft deleted and not
 	app.get("/dbTest", async (request: FastifyRequest, _reply: FastifyReply) => {
 		return request.em.find(User, {}, { filters: { [SOFT_DELETABLE_FILTER]: false } });

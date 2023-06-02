@@ -3,3 +3,4 @@ build/
 **/*.tsbuildinfo
 /.env
 doc/
+src/mommy-talks-firebase-service-key.json
