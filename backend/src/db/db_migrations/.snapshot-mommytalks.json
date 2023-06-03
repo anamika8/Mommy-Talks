@@ -72,8 +72,8 @@
           "nullable": false,
           "mappedType": "string"
         },
-        "password": {
-          "name": "password",
+        "uuid": {
+          "name": "uuid",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,

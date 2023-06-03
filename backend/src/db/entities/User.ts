@@ -27,7 +27,7 @@ export class User extends MommyTalksBaseEntity {
 	last_name!: string;
 
 	@Property()
-	password!: string;
+	uuid!: string;
 
 	@Property({ nullable: true })
 	last_login?: Date;
