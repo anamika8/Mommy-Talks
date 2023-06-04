@@ -4,12 +4,18 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import { loadEnv } from "vite";
 // @ts-ignore
 // We're being cheeky to avoid Vite problem with env files
-import * as envVars from "./.env.ts";
+//import * as envVars from "./.env.ts";
 
+/*
 const define: Record<string, string | undefined> = {};
 for (const [key, value] of Object.entries(envVars)) {
 	define[`process.env.${key}`] = JSON.stringify(value);
-}
+}*/
+
+// Generates ascii 65-90 (Capital letters) into array Vite is expecting
+const alphabet = Array.from(Array(26), (v, k) => {
+	return String.fromCharCode(k + 65);
+});
 
 export default defineConfig(({ command, mode }) => {
 	// Load env file based on `mode` in the current working directory.
@@ -23,6 +29,6 @@ export default defineConfig(({ command, mode }) => {
 			setupFiles: "./test/setup.ts",
 		},
 		// vite config
-		define,
+		envPrefix: alphabet,
 	};
 });

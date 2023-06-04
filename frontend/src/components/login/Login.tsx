@@ -62,7 +62,7 @@ export const LoginForm = () => {
             localStorage.setItem('email', email);
             setEmail("");
             setPassword("");
-            navigate("/signup");
+            navigate("/forum");
         } catch (error) {
             const errorMessage = error.message;
             setErrorMessage(errorMessage);

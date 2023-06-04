@@ -3,7 +3,6 @@ import { SOFT_DELETABLE_FILTER } from "mikro-orm-soft-delete";
 import { User, UserRole } from "../db/entities/User.js";
 import { ICreateUsersBody, IUpdateUsersBody } from "../types.js";
 import admin from 'firebase-admin';
-//import * as serviceAccount from "../../src/mommy-talks-firebase-service-key.json";
 import fs from "fs";
 
 
@@ -22,8 +21,17 @@ export function UserRoutesInit(app: FastifyInstance) {
 				email,
 				password,
 			});
+			const newUser = await req.em.create(User, {
+				first_name,
+				last_name,
+				email,
+				uuid: user.uid,
+				// We'll only create Admins manually!
+				role: UserRole.USER,
+			});
 
-			reply.send({ userId: user.uid });
+			await req.em.flush();
+			return reply.send(newUser);
 		} catch (error) {
 			reply.code(400).send({ error: error.message });
 		}
@@ -54,7 +62,6 @@ export function UserRoutesInit(app: FastifyInstance) {
 				first_name,
 				last_name,
 				email,
-				password,
 				// We'll only create Admins manually!
 				role: UserRole.USER,
 			});
@@ -68,10 +75,10 @@ export function UserRoutesInit(app: FastifyInstance) {
 
 	//READ
 	app.search("/users", async (req, reply) => {
-		const { id } = req.body;
+		const { uuid } = req.body;
 
 		try {
-			const theUser = await req.em.findOneOrFail(User, id, { strict: true });
+			const theUser = await req.em.findOneOrFail(User, {uuid}, { strict: true });
 			reply.send(theUser);
 		} catch (err) {
 			reply.status(500).send(err);
@@ -82,7 +89,7 @@ export function UserRoutesInit(app: FastifyInstance) {
 	app.put<{ Body: IUpdateUsersBody }>("/users", async (req, reply) => {
 		const { first_name, id, last_name } = req.body;
 
-		const userToChange = await req.em.findOneOrFail(User, id, { strict: true });
+		const userToChange = await req.em.findOneOrFail(User, { id: Number(id) }, { strict: true });
 		userToChange.first_name = first_name;
 		userToChange.last_name = last_name;
 
@@ -99,18 +106,20 @@ export function UserRoutesInit(app: FastifyInstance) {
 
 			try {
 				// Authenticate my user's role
-				const me = await req.em.findOneOrFail(User, my_id, { strict: true });
+				const me = await req.em.findOneOrFail(User, { id: Number(my_id) }, { strict: true });
 				// Check passwords match
-				if (me.password !== password) {
+				/*
+				if (me.role !== UserRole.ADMIN) {
 					return reply.status(401).send();
 				}
+				 */
 
 				// Make sure the requester is an Admin
 				if (me.role === UserRole.USER) {
 					return reply.status(401).send({ message: "You are not an admin!" });
 				}
 
-				const theUserToDelete = await req.em.findOneOrFail(User, id_to_delete, { strict: true });
+				const theUserToDelete = await req.em.findOneOrFail(User, { id: Number(id_to_delete) }, { strict: true });
 
 				//Make sure the to-be-deleted user isn't an admin
 				if (theUserToDelete.role === UserRole.ADMIN) {

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {signup} from "@/services/Auth.tsx";
 import symbol from './logo.jpg';
 import "./Signup.css";
 
@@ -35,6 +36,7 @@ export const SignupForm = () => {
     const [password, setPassword] = useState('');
     const [verifyPassword, setVerifyPassword] = useState('');
     const [submitFailed, setSubmitFailed] = useState(false);
+    const [uid, setUid] = useState('');
     const navigate = useNavigate();
 
     const handleFirstNameChange = (event) => {
@@ -67,18 +69,18 @@ export const SignupForm = () => {
         }
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         // Perform form submission logic here
-
+        const uuid = await signup(email, password, firstName, lastName);
         // Reset form fields
         setFirstName('');
         setLastName('');
         setEmail('');
         setPassword('');
         setVerifyPassword('');
-        setSubmitFailed(true);
+        setSubmitFailed(false);
         // Navigate to a different page after submission
         navigate("/login");
     };
