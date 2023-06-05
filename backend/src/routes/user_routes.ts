@@ -3,15 +3,25 @@ import { SOFT_DELETABLE_FILTER } from "mikro-orm-soft-delete";
 import { User, UserRole } from "../db/entities/User.js";
 import { ICreateUsersBody, IUpdateUsersBody } from "../types.js";
 import admin from 'firebase-admin';
-import fs from "fs";
-
+import dotenv from "dotenv";
+dotenv.config();
 
 export function UserRoutesInit(app: FastifyInstance) {
-	// Read the Firebase service key JSON file
-	const serviceAccount = JSON.parse(fs.readFileSync('src/mommy-talks-firebase-service-key.json', 'utf8'));
-
+	// Read the Firebase config from .env
+	const firebaseConfig = {
+		type: process.env.FIREBASE_TYPE,
+		projectId: process.env.FIREBASE_PROJECT_ID,
+		privateKeyId: process.env.FIREBASE_PRIVATE_KEY_ID,
+		privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+		clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+		clientId: process.env.FIREBASE_CLIENT_ID,
+		authUri: process.env.FIREBASE_AUTH_URI,
+		tokenUri: process.env.FIREBASE_TOKEN_URI,
+		authProviderX509CertUrl: process.env.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
+		clientX509CertUrl: process.env.FIREBASE_CLIENT_X509_CERT_URL,
+	};
 	admin.initializeApp({
-		credential: admin.credential.cert(serviceAccount as admin.ServiceAccount)
+		credential: admin.credential.cert(firebaseConfig),
 	});
 
 	app.post<{ Body: ICreateUsersBody }>("/signup", async (req, reply) => {
@@ -109,10 +119,10 @@ export function UserRoutesInit(app: FastifyInstance) {
 	});
 
 	// DELETE
-	app.delete<{ Body: { my_id: number; id_to_delete: number; password: string } }>(
+	app.delete<{ Body: { my_id: number; id_to_delete: number } }>(
 		"/users",
 		async (req, reply) => {
-			const { my_id, id_to_delete, password } = req.body;
+			const { my_id, id_to_delete } = req.body;
 
 			try {
 				// Authenticate my user's role
@@ -128,17 +138,18 @@ export function UserRoutesInit(app: FastifyInstance) {
 				if (me.role === UserRole.USER) {
 					return reply.status(401).send({ message: "You are not an admin!" });
 				}
-
 				const theUserToDelete = await req.em.findOneOrFail(User, { id: Number(id_to_delete) }, { strict: true });
-
-				//Make sure the to-be-deleted user isn't an admin
 				if (theUserToDelete.role === UserRole.ADMIN) {
-					return reply
-						.status(401)
-						.send({ message: "You do not have enough privileges to delete an Admin!" });
+					return reply.status(500).send({ message: "You cannot delete an Admin!" });
 				}
-
-				await req.em.remove(theUserToDelete).flush();
+				theUserToDelete.deleted_at = new Date();
+				await req.em.flush();
+				try {
+					await admin.auth().deleteUser(theUserToDelete.uuid);
+					console.log('User deleted successfully from Firebase');
+				} catch (error) {
+					console.error('Error deleting user from Firebase:', error);
+				}
 				return reply.send(theUserToDelete);
 			} catch (err) {
 				return reply.status(500).send(err);
