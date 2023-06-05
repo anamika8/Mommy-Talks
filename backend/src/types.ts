@@ -8,7 +8,9 @@ export type ICreateUsersBody = {
 export type IUpdateUsersBody = {
 	first_name: string;
 	last_name: string;
+	last_login: Date;
 	id: number;
+	uuid: string;
 };
 
 export type ICreateForum = {

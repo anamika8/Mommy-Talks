@@ -107,11 +107,25 @@ export function UserRoutesInit(app: FastifyInstance) {
 
 	// UPDATE
 	app.put<{ Body: IUpdateUsersBody }>("/users", async (req, reply) => {
-		const { first_name, id, last_name } = req.body;
-
-		const userToChange = await req.em.findOneOrFail(User, { id: Number(id) }, { strict: true });
-		userToChange.first_name = first_name;
-		userToChange.last_name = last_name;
+		const { first_name, id, last_name, last_login, uuid } = req.body;
+		let searchOptions = {};
+		if (id && uuid) {
+			searchOptions = { id, uuid, deleted_at: null };
+		} else if (id) {
+			searchOptions = { id, deleted_at: null };
+		} else if (uuid) {
+			searchOptions = { uuid, deleted_at: null };
+		} else {
+			reply.status(400).send("Please provide id, uuid, or both for searching users.");
+			return;
+		}
+		const userToChange = await req.em.findOneOrFail(User, searchOptions, { strict: true });
+		if (first_name)
+			userToChange.first_name = first_name;
+		if (last_name)
+			userToChange.last_name = last_name;
+		if (last_login)
+			userToChange.last_login = last_login;
 
 		// Reminder -- this is how we persist our JS object changes to the database itself
 		await req.em.flush();
