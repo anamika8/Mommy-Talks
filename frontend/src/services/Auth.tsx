@@ -30,6 +30,10 @@ export async function signup(email, password, first_name, last_name) {
     return httpClient.post("/signup", { email, password, first_name, last_name});
 }
 
+export async function login(uuid, last_login) {
+    return httpClient.put("/users", { last_login, uuid});
+}
+
 export async function logout() {
     try {
         await getAuth().signOut();
