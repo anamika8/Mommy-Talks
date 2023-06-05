@@ -75,10 +75,20 @@ export function UserRoutesInit(app: FastifyInstance) {
 
 	//READ
 	app.search("/users", async (req, reply) => {
-		const { uuid } = req.body;
-
+		const { id, uuid } = req.body;
+		let searchOptions = {};
+		if (id && uuid) {
+			searchOptions = { id, uuid, deleted_at: null };
+		} else if (id) {
+			searchOptions = { id, deleted_at: null };
+		} else if (uuid) {
+			searchOptions = { uuid, deleted_at: null };
+		} else {
+			reply.status(400).send("Please provide id, uuid, or both for searching users.");
+			return;
+		}
 		try {
-			const theUser = await req.em.findOneOrFail(User, {uuid}, { strict: true });
+			const theUser = await req.em.findOneOrFail(User, searchOptions, { strict: true });
 			reply.send(theUser);
 		} catch (err) {
 			reply.status(500).send(err);

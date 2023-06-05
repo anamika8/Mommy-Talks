@@ -20,7 +20,6 @@ const auth = getAuth(app);
 export async function loginWithEmailAndPassword(email, password) {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        console.log(userCredential.user);
         return userCredential.user;
     } catch (error) {
         throw new Error('Incorrect email or password');
@@ -29,4 +28,12 @@ export async function loginWithEmailAndPassword(email, password) {
 
 export async function signup(email, password, first_name, last_name) {
     return httpClient.post("/signup", { email, password, first_name, last_name});
+}
+
+export async function logout() {
+    try {
+        await getAuth().signOut();
+    } catch (error) {
+        console.log('Logout error:', error);
+    }
 }

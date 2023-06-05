@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import symbol from "@/components/forum/logo.jpg";
 import "./create-forum.css";
 import {ForumService} from "@/services/ForumService.tsx";
+import { useUser } from '@/components/UserContext.tsx';
 
 export const CreateForum = () => {
     return (
@@ -27,6 +28,7 @@ export const MainContent = () => {
 
 export const Form = () => {
     const navigate = useNavigate();
+    const { userRecord } = useUser();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [submitFailed, setSubmitFailed] = useState(false);
@@ -44,7 +46,8 @@ export const Form = () => {
     };
     const handleSubmit = (event) => {
         event.preventDefault();
-        const email = "email2@email.com";
+        const email = userRecord.email;
+        console.log("In the create forum page with logged in user - ", email);
         ForumService.send(email, title, content)
             .then((response) => {
                 console.log(`Successful post : ${response}`);

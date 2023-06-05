@@ -12,6 +12,11 @@ body * {
    
 }
 
+.inactiveLink {
+    pointer-events: none;
+    cursor: default;
+}
+
 .symbol {
   display: block;
   width: auto;

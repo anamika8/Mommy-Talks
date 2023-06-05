@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
+import { useUser } from '@/components/UserContext.tsx';
 import symbol from "@/components/forum/logo.jpg";
 import "./update-forum.css";
-import {getForumById, getForumComments, getProfileById, searchTopic} from "@/services/HttpClient.tsx";
+import {getForumById, getForumComments, getProfileById} from "@/services/HttpClient.tsx";
 import {ForumService} from "@/services/ForumService.tsx";
 import {CommentService} from "@/services/CommentService.tsx";
 import {CommentType} from "@/ProfileTypes.ts";
@@ -20,14 +21,16 @@ export const UpdateForum = () => {
     );
 };
 
-const Form = ({ currentForumId, handleTitleChange, handleContentChange, title, content, username }) => {
+const Form = ({ currentForumId, handleTitleChange, handleContentChange, title, content, username, userId, currentUserId }) => {
     const navigate = useNavigate();
+
     const handleUpdate = (event) => {
         event.preventDefault();
         console.log('Update Submitted:', title, content);
         ForumService.update(currentForumId, title, content)
             .then((response) => {
                 console.log(`Successful update`);
+                navigate("/forum");
             })
             .catch(err => {
                 console.error(err);
@@ -46,6 +49,7 @@ const Form = ({ currentForumId, handleTitleChange, handleContentChange, title, c
                 console.error(err);
             });
     };
+    const isDisabled = userId !== currentUserId;
 
     return (
         <form id="query-form">
@@ -57,6 +61,7 @@ const Form = ({ currentForumId, handleTitleChange, handleContentChange, title, c
                     placeholder="Title"
                     onChange={handleTitleChange}
                     value={title}
+                    disabled={isDisabled}
                 />
             </p>
             <div className="colm-4" id="content-section">
@@ -67,6 +72,7 @@ const Form = ({ currentForumId, handleTitleChange, handleContentChange, title, c
               placeholder="Content"
               onChange={handleContentChange}
               value={content}
+              disabled={isDisabled}
           />
                 </p>
                 <span id="user-info">
@@ -76,12 +82,12 @@ const Form = ({ currentForumId, handleTitleChange, handleContentChange, title, c
             <br />
             <div id="outer">
                 <div className="inner">
-                    <button type="button" name="submit" id="updatePost" onClick={handleUpdate}>
+                    <button type="button" name="submit" id="updatePost" onClick={handleUpdate} className={`${isDisabled ? 'inactiveLink' : ''}`}>
                         Update
                     </button>
                 </div>
                 <div className="inner">
-                    <button type="button" name="submit" id="deletePost" onClick={handleDelete}>
+                    <button type="button" name="submit" id="deletePost" onClick={handleDelete} className={`${isDisabled ? 'inactiveLink' : ''}`}>
                         Delete
                     </button>
                 </div>
@@ -93,7 +99,7 @@ const Form = ({ currentForumId, handleTitleChange, handleContentChange, title, c
 const Comment = ({ comment, userId }) => {
     const [commenter, setCommenter] = useState('');
     const getCommenter = (userId): void => {
-        getProfileById(userId)
+        getProfileById(userId, null)
             .then((response) => {
                 const theUserName = `${response.first_name} ${response.last_name}`;
                 setCommenter(theUserName);
@@ -120,22 +126,15 @@ const Comment = ({ comment, userId }) => {
 };
 
 const NewComment = ({ username, forumId }) => {
-    const currentUserEmail = "email2@email.com";
+    const currentUserEmail = localStorage.getItem('email');
     const navigate = useNavigate();
     const handleCommentSubmit = (event) => {
         if (event.key === 'Enter') {
             event.preventDefault();
             const newComment = event.target.value;
-            console.log('Comment posted:', newComment);
             CommentService.send(currentUserEmail, forumId.toString(), newComment)
                 .then((response) => {
-                    console.log(`Successfully commented : ${response}`);
-                    navigate('/update-forum', {
-                        state:{
-                            forumId: forumId
-                        }
-                    });
-                    window.location.reload();
+                    navigate('/forum');
                 })
                 .catch(err => {
                     console.error(err);
@@ -167,6 +166,17 @@ export const MainComponent = ({currentForumId}) => {
     const [comments, setComments] = useState<CommentType[]>([]);
     const [userId, setUserId] = useState(0);
     const [username, setUsername] = useState('');
+    const [currentUserId, setCurrentUserId] = useState(0);
+    const [currentUsername, setCurrentUsername] = useState('');
+    const { userRecord } = useUser();
+    const getCurrentUserId = (uuid): void => {
+        getProfileById(null, uuid)
+            .then((response) => {
+                setCurrentUserId(response.id);
+                getLoggedInUsername(response.id);
+            })
+            .catch( (err) => console.log("Error in fetch profile", err));
+    };
 
     const populateForumDetails = (currentForumId): void => {
         getForumById(currentForumId)
@@ -179,7 +189,6 @@ export const MainComponent = ({currentForumId}) => {
     };
 
     const populateComments = (currentForumId): void => {
-        console.log("Getting all comments for forumId - ", currentForumId);
         getForumComments(currentForumId)
             .then((response) => {
                 console.log("Found comments - ", response.length);
@@ -189,7 +198,7 @@ export const MainComponent = ({currentForumId}) => {
     };
 
     const getUsername = (userId): void => {
-        getProfileById(userId)
+        getProfileById(userId, null)
             .then((response) => {
                 const theUserName = `${response.first_name} ${response.last_name}`;
                 setUsername(theUserName);
@@ -197,9 +206,19 @@ export const MainComponent = ({currentForumId}) => {
             .catch( (err) => console.log("Error in fetch profile", err));
     };
 
+    const getLoggedInUsername = (userId): void => {
+        getProfileById(userId, null)
+            .then((response) => {
+                const theUserName = `${response.first_name} ${response.last_name}`;
+                setCurrentUsername(theUserName);
+            })
+            .catch( (err) => console.log("Error in fetch profile", err));
+    };
+
     useEffect(() => {
         populateForumDetails(currentForumId);
         populateComments(currentForumId);
+        getCurrentUserId(userRecord.uid);
     }, [currentForumId]);
 
     useEffect(() => {
@@ -224,6 +243,8 @@ export const MainComponent = ({currentForumId}) => {
                 title={title}
                 content={content}
                 username={username}
+                userId={userId}
+                currentUserId={currentUserId}
             />
             <div id="all-comment">
                 {comments.length > 0 ? (
@@ -235,7 +256,7 @@ export const MainComponent = ({currentForumId}) => {
                 )}
 
             <NewComment
-                username={username}
+                username={currentUsername}
                 forumId={currentForumId}
             />
             </div>

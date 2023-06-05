@@ -13,11 +13,15 @@ export const httpClient = axios.create({
     },
 });
 
-export async function getProfileById(id): Promise<ProfileType> {
-    const data = JSON.stringify({
-        "id": parseInt(id)
-    });
-    console.log(data);
+export async function getProfileById(id: number, uuid: string): Promise<ProfileType> {
+    const data = {};
+    if(id) {
+        data['id'] = id;
+    }
+    if (uuid)
+    {
+        data['uuid'] = uuid;
+    }
     const config = {
         method: 'search',
         maxBodyLength: Infinity,

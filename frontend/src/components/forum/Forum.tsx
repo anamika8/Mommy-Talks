@@ -4,6 +4,7 @@ import symbol from './logo.jpg';
 import "./forum.css";
 import {ForumType} from "@/ProfileTypes.ts";
 import {getAllForums, searchTopic} from "@/services/HttpClient.tsx";
+import { logout } from "@/services/Auth.tsx";
 
 export const Forum = () => {
     return (
@@ -19,12 +20,13 @@ export const Forum = () => {
 export const Header = () => {
     const navigate = useNavigate();
 
-    const handleLogout = (event) => {
+    const handleLogout = async (event) => {
+        event.preventDefault();
+        await logout();
         // Clear user session (example)
-        localStorage.removeItem('accessToken'); // Remove access token from local storage
-
+        localStorage.removeItem('email');
         // Redirect to login page or home page
-        navigate('/');
+        navigate('/login');
     };
 
     const handleCreatePost = (event) => {

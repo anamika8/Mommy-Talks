@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import symbol from './logo.jpg';
 import { loginWithEmailAndPassword } from "@/services/Auth.tsx";
+import { useUser } from '@/components/UserContext.tsx';
 import "./login.css";
 
 export const Login = () => {
@@ -36,6 +37,7 @@ export const LoginForm = () => {
     const [submitFailed, setSubmitFailed] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
+    const { setUser } = useUser();
 
     useEffect(() => {
         setErrorMessage("");
@@ -55,13 +57,13 @@ export const LoginForm = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setSubmitFailed(true);
 
         try {
-            await loginWithEmailAndPassword(email, password);
+            const theUser = await loginWithEmailAndPassword(email, password);
             localStorage.setItem('email', email);
             setEmail("");
             setPassword("");
+            setUser(theUser);
             navigate("/forum");
         } catch (error) {
             const errorMessage = error.message;
