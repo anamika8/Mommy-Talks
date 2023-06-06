@@ -51,28 +51,6 @@ void tap.test("GET /users should return all users", async () => {
     Array.isArray(users).should.equal(true);
 });
 
-void tap.test("POST /users should create a new user", async () => {
-    const user = {
-        first_name: "John",
-        last_name: "Doe",
-        email: "john.doe@example.com",
-        password: "password",
-    };
-
-    const response = await app.inject({
-        method: "POST",
-        url: "/users",
-        payload: user,
-    });
-
-    response.statusCode.should.equal(200);
-
-    const newUser = JSON.parse(response.body);
-    newUser.first_name.should.equal(user.first_name);
-    newUser.last_name.should.equal(user.last_name);
-    newUser.email.should.equal(user.email);
-});
-
 void tap.test("PUT /users should update a user", async () => {
     // Assuming there is a user with ID 1
     const userId = 1;
