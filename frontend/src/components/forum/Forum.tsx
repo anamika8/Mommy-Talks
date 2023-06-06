@@ -26,7 +26,7 @@ export const Header = () => {
         // Clear user session (example)
         localStorage.removeItem('email');
         // Redirect to login page or home page
-        navigate('/login');
+        navigate('/');
     };
 
     const handleCreatePost = (event) => {

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import symbol from './logo.jpg';
 import { loginWithEmailAndPassword, login } from "@/services/Auth.tsx";
 import { useUser } from '@/components/UserContext.tsx';
-import "./login.css";
+import "./Login.css";
 
 export const Login = () => {
     return (

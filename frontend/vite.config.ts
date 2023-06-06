@@ -17,10 +17,8 @@ const alphabet = Array.from(Array(26), (v, k) => {
 	return String.fromCharCode(k + 65);
 });
 
+
 export default defineConfig(({ command, mode }) => {
-	// Load env file based on `mode` in the current working directory.
-	// Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
-	const env = loadEnv(mode, process.cwd(), "");
 	return {
 		plugins: [react(), tsconfigPaths()],
 		test: {
@@ -29,6 +27,20 @@ export default defineConfig(({ command, mode }) => {
 			setupFiles: "./test/setup.ts",
 		},
 		// vite config
+		// https://github.com/vitejs/vite/pull/9880 I am so angry about this
 		envPrefix: alphabet,
+		server: {
+			watch: {
+				usePolling: true,
+			},
+			host: true, // needed for the Docker Container port mapping to work
+			strictPort: true,
+			port: 5173,
+		},
+		build: {
+			target: "esnext",
+			emptyOutDir: true,
+			outDir: "build"
+		}
 	};
 });
