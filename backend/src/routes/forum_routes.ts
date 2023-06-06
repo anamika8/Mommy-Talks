@@ -40,13 +40,15 @@ export function ForumRoutesInit(app: FastifyInstance) {
 
 	const badwordsCheck = (title, content) => {
 		let badWord = undefined;
-		title.split(" ").forEach((word) => {
-			if (app.badwords.has(word)) {
-				badWord = word;
-			}
-		});
+		if (title !== undefined) {
+			title.split(" ").forEach((word) => {
+				if (app.badwords.has(word)) {
+					badWord = word;
+				}
+			});
+		}
 
-		if (badWord === undefined) {
+		if (badWord === undefined && content !== undefined) {
 			content.split(" ").forEach((word) => {
 				if (app.badwords.has(word)) {
 					badWord = word;
