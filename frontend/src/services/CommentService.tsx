@@ -1,7 +1,7 @@
-import {httpClient} from "@/services/HttpClient.tsx";
+import {httpCommentsClient} from "@/services/CommentsClient.tsx";
 
 export const CommentService = {
     async send(user: string, forumId: string, comment: string) {
-        return httpClient.post("/comment", { user, forumId, comment});
+        return httpCommentsClient.post("/comment", { user, forumId, comment});
     }
 };

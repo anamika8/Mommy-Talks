@@ -2,6 +2,7 @@ import os
 from http.client import HTTPException
 from dotenv import load_dotenv
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import databases
 import uvicorn
 import sqlalchemy
@@ -22,6 +23,21 @@ database = databases.Database(DATABASE_URL)
 metadata = sqlalchemy.MetaData()
 engine = create_engine(DATABASE_URL)
 
+# Configure CORS
+origins = [
+    "http://localhost",
+    "http://localhost:5173",
+    "http://localhost:8000",
+    # Add more allowed origins as needed
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 async def setup():
@@ -95,13 +111,13 @@ async def create_comment(req_body: CommentRequestBody):
     return {"message": "Comment created successfully"}
 
 
-@app.get("/comments/id")
-async def get_comments_by_id(req_body: SearchRequestBody):
-    comment_id = req_body.id
-    query = select([comments]).where(comments.c.id == comment_id, comments.c.deleted == False)
-    result = await database.fetch_one(query)
+@app.get("/comments/{forum_id}")
+async def get_forum_comments(forum_id: int):
+    print("Looking for comments under forum_id", forum_id)
+    query = select([comments]).where(comments.c.forum_id_id == forum_id, comments.c.deleted == False)
+    result = await database.fetch_all(query)
     if not result:
-        result = f"Comment not found with id - {comment_id}"
+        result = f"Comments not found with forum id - {forum_id}"
     return result
 
 

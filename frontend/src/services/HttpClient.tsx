@@ -92,21 +92,3 @@ export async function searchTopic(title: string): Promise<ForumType[]> {
     const response = await axios.request(config);
     return response.data as ForumType[];
 }
-
-export async function getForumComments(forumId: number): Promise<CommentType[]> {
-    const data = JSON.stringify({
-        "id": forumId
-    });
-
-    const config = {
-        method: 'search',
-        maxBodyLength: Infinity,
-        url: `${serverUrl}/comments/id`,
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        data : data
-    };
-    const response = await axios.request(config);
-    return response.data as CommentType[];
-}
