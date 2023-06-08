@@ -1,9 +1,20 @@
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.9
+# Use the official Python base image
+FROM python:3.9-slim
 
-COPY ./app /app
+# Set the working directory in the container
+WORKDIR /app
 
-RUN pip install --no-cache-dir psycopg2
+# Copy the requirements.txt file to the container
+COPY requirements.txt .
 
+# Install the dependencies
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Copy the rest of the application code to the container
+COPY . .
+
+# Expose the port that the FastAPI service will listen on
 EXPOSE 8000
 
+# Start the FastAPI application
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
