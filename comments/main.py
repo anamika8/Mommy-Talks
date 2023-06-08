@@ -117,7 +117,7 @@ async def get_forum_comments(forum_id: int):
     query = select([comments]).where(comments.c.forum_id_id == forum_id, comments.c.deleted == False)
     result = await database.fetch_all(query)
     if not result:
-        result = f"Comments not found with forum id - {forum_id}"
+        result = []
     return result
 
 
