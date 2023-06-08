@@ -18,9 +18,3 @@ export type ICreateForum = {
 	content: string;
 	user: string;
 };
-
-export type ICreateComment = {
-	comment: string;
-	forumId: number;
-	user: string;
-};
