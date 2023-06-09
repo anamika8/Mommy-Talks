@@ -40,7 +40,7 @@ const LoginButton = () => {
 
     const handleClick = () => {
         // Navigate to a login page
-        navigate('/Login');
+        navigate('/login');
     };
 
     return (
@@ -53,7 +53,7 @@ const SignupButton = () => {
 
     const handleClick = () => {
         // Navigate to a signup page
-        navigate('/Signup');
+        navigate('/signup');
     };
 
     return (
@@ -65,6 +65,7 @@ const SignupButton = () => {
 const Main = () => (
     <main role="main">
         <div className="app-first-page">
+            <h1 className="app-title">Mommy Talks</h1>
             <h2 className="theme">Moms will not feel alone here !!!</h2>
             <p className="theme-details">
                 A place for new, upcoming and experienced mothers to share their concern, get helpful suggestions.
@@ -73,6 +74,7 @@ const Main = () => (
         </div>
     </main>
 );
+
 const FacebookButton = () => {
     const handleFacebookLogin = () => {
         // Open Facebook login page in a new tab/window
@@ -85,11 +87,11 @@ const FacebookButton = () => {
         </button>
     );
 };
+
 const ButtonContainer = () => (
     <div className="button-container">
         <LoginButton />
         <SignupButton />
-        <FacebookButton />
     </div>
 );
 

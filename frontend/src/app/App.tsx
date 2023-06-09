@@ -7,7 +7,7 @@ import viteLogo from "/vite.svg";
 //import "@css/App.css";
 
 // This is our first React "Component"
-
+/*
 function App() {
 	return (
 		<BrowserRouter>
@@ -34,13 +34,14 @@ function App() {
 		</div>
 		</BrowserRouter>
 	);
-}
+}*/
 
-/*
+
 function App() {
 	return (
 		<BrowserRouter>
 			<div className="App">
+				<UserProvider>
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/login" element={<Login />} />
@@ -49,10 +50,11 @@ function App() {
 					<Route path="/create-forum" element={<CreateForum />} />
 					<Route path="/update-forum" element={<UpdateForum />} />
 				</Routes>
+				</UserProvider>
 			</div>
 		</BrowserRouter>
 	);
-}*/
+}
 export default App;
 
 
