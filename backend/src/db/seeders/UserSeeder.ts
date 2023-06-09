@@ -53,6 +53,7 @@ export class UserSeeder extends Seeder {
 			first_name: "Test",
 			last_name: "Mommy",
 			email: "example@email.com",
+			//password:"Welcome@1"
 			uuid: "KjmQcT2gAcbCFghMdNqA5mJyOPg2",
 			role: UserRole.USER,
 		});

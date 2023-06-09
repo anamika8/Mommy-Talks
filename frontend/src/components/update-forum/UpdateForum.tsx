@@ -83,12 +83,12 @@ const Form = ({ currentForumId, handleTitleChange, handleContentChange, title, c
             <br />
             <div id="outer">
                 <div className="inner">
-                    <button type="button" name="submit" id="updatePost" onClick={handleUpdate} className={`${isDisabled ? 'inactiveLink' : ''}`}>
+                    <button type="button" name="submit" id="updatePost" onClick={handleUpdate} className={`${isDisabled ? 'inactiveLinkUpdate' : ''}`}>
                         Update
                     </button>
                 </div>
                 <div className="inner">
-                    <button type="button" name="submit" id="deletePost" onClick={handleDelete} className={`${isDisabled ? 'inactiveLink' : ''}`}>
+                    <button type="button" name="submit" id="deletePost" onClick={handleDelete} className={`${isDisabled ? 'inactiveLinkUpdate' : ''}`}>
                         Delete
                     </button>
                 </div>
