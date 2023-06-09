@@ -250,7 +250,7 @@ export const MainComponent = ({currentForumId}) => {
             <div id="all-comment">
                 {comments.length > 0 ? (
                     comments.map((eachComment, index) => (
-                        <Comment key={index} comment={eachComment.comment} userId={eachComment.user}/>
+                        <Comment key={index} comment={eachComment.comment} userId={eachComment.user_id}/>
                     ))
                 ) : (
                     <p></p>

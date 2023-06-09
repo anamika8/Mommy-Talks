@@ -30,7 +30,7 @@ export type CommentType = {
 	created_at: string,
 	updated_at: string,
 	deleted_at: string,
-	user: number,
+	user_id: number,
 	forumId: number,
 	comment: string,
 	deleted: boolean,
