@@ -3,15 +3,18 @@
 import React from "react";
 // import react-testing methods
 import { render, screen } from "@testing-library/react";
-import { MemoryRouter as Router } from 'react-router-dom';
-// add custom jest matchers from jest-dom
+import {MemoryRouter, MemoryRouter as Router} from 'react-router-dom';
 import "@testing-library/jest-dom";
 import { Home } from "../src/Components/home/Home.js";
 import { Login } from '../src/Components/login/Login.js';
 import { Signup } from '../src/Components/signup/Signup.js';
 import { Forum } from '../src/Components/forum/Forum.js';
-import { UserProvider } from '../src/components/UserContext.tsx';
+import { CreateForum } from '../src/Components/create-forum/CreateForum.js';
+import { UserProvider, useUser } from '../src/components/UserContext.tsx';
+import { ForumService } from '../src/services/ForumService.tsx';
 import userEvent from '@testing-library/user-event';
+import '@testing-library/jest-dom/extend-expect';
+import {vitest} from "vitest";
 
 describe('Home Component', () => {
 	it('Should render homepage correctly', () => {
@@ -183,3 +186,39 @@ describe('Forum Component', () => {
 	});
 });
 
+const { Mock } = vitest;
+
+vitest.mock('./UserContext', () => {
+	return {
+		useUser: Mock.fn(),
+	};
+});
+
+describe("CreateForum Component", () => {
+	test("renders header correctly", () => {
+		render(
+			<Router>
+				<UserProvider>
+					<CreateForum />
+				</UserProvider>
+			</Router>
+		);
+		const headerElement = screen.getByRole("banner");
+		expect(headerElement).toBeInTheDocument();
+		const createPostButton = screen.getByRole("link", { name: "Create Post" });
+		expect(createPostButton).toBeInTheDocument();
+	});
+
+	test("renders create button in header correctly", () => {
+		render(
+			<Router>
+				<UserProvider>
+					<CreateForum />
+				</UserProvider>
+			</Router>
+		);
+		const createPostButton = screen.getByRole("link", { name: "Create Post" });
+		expect(createPostButton).toBeInTheDocument();
+	});
+
+});
