@@ -282,11 +282,11 @@ span.result {
     width:50%;
     margin:0 auto;
 }
-
+/*
 body {
   font-size: 25px;
 }
-
+*/
 .symbol {
   width: auto;
   height: 220px;
@@ -306,6 +306,7 @@ span.result {
 }
 
 }
+
     
 
 
