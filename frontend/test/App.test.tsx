@@ -8,7 +8,7 @@ import { MemoryRouter as Router } from 'react-router-dom';
 import "@testing-library/jest-dom";
 import { Home } from "../src/Components/home/Home.js";
 import { Login } from '../src/Components/login/Login.js';
-//import { UserContext } from '../src/components/UserContext.js';
+import { Signup } from '../src/Components/signup/Signup.js';
 import { UserProvider } from '../src/components/UserContext.tsx';
 import userEvent from '@testing-library/user-event';
 
@@ -70,3 +70,52 @@ describe('Login Component', () => {
 	});
 
 });
+
+describe('Signup Component', () => {
+	it('Should render signup form correctly', () => {
+		render(
+			<Router>
+				<UserProvider>
+					<Signup />
+				</UserProvider>
+			</Router>
+		);
+
+		expect(screen.getByLabelText('First Name *')).toBeInTheDocument();
+		expect(screen.getByLabelText('Last Name *')).toBeInTheDocument();
+		expect(screen.getByLabelText('Email *')).toBeInTheDocument();
+		expect(screen.getByLabelText('Password *')).toBeInTheDocument();
+		expect(screen.getByLabelText('Verify Password *')).toBeInTheDocument();
+		expect(screen.getByRole('button', { name: 'Sign up' })).toBeInTheDocument();
+		expect(screen.getByRole('link', { name: 'Log in' })).toBeInTheDocument();
+	});
+
+	it('Should submit form on button click with valid inputs', () => {
+		render(
+			<Router>
+				<UserProvider>
+					<Signup />
+				</UserProvider>
+			</Router>
+		);
+
+		const firstNameInput = screen.getByLabelText('First Name *');
+		userEvent.type(firstNameInput, 'John');
+
+		const lastNameInput = screen.getByLabelText('Last Name *');
+		userEvent.type(lastNameInput, 'Doe');
+
+		const emailInput = screen.getByLabelText('Email *');
+		userEvent.type(emailInput, 'test@example.com');
+
+		const passwordInput = screen.getByLabelText('Password *');
+		userEvent.type(passwordInput, 'Password@123');
+
+		const verifyPasswordInput = screen.getByLabelText('Verify Password *');
+		userEvent.type(verifyPasswordInput, 'Password@123');
+
+		const signupButton = screen.getByRole('button', { name: 'Sign up' });
+		userEvent.click(signupButton);
+	});
+});
+
