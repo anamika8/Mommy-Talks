@@ -2,27 +2,31 @@
 // import dependencies
 import React from "react";
 // import react-testing methods
-import { render, fireEvent, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import { MemoryRouter as Router } from 'react-router-dom';
 
 // add custom jest matchers from jest-dom
 import "@testing-library/jest-dom";
-import { App } from "../src/app/App.js";
-import { Login } from "../src/Components/login/Login.js";
+import { Home } from "../src/Components/home/Home.js";
 
-test("Math.sqrt()", () => {
-	expect(Math.sqrt(4)).toBe(2);
-	expect(Math.sqrt(144)).toBe(12);
-	expect(Math.sqrt(2)).toBe(Math.SQRT2);
-});
-/*
-describe("Renders react properly", async() => {
-	it("Should render homepage correctly", async () => {
-		render(<App />);
+describe('Home Component', () => {
+	it('Should render homepage correctly', () => {
+		render(
+			<Router>
+				<Home />
+			</Router>
+		);
 
-		const elem = await screen.queryByText("Moms will not feel alone here !!!");
-		expect(elem).not.toBeNull();
-		expect(elem).toBeVisible();
+		const titleElement = screen.getByText('Mommy Talks');
+		expect(titleElement).toBeInTheDocument();
+
+		const themeElement = screen.getByText('Moms will not feel alone here !!!');
+		expect(themeElement).toBeInTheDocument();
+
+		const buttonContainerElement = screen.getByRole('button', { name: 'Login' });
+		expect(buttonContainerElement).toBeInTheDocument();
 	});
-});*/
+});
+
 
 
