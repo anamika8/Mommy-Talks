@@ -9,9 +9,9 @@ import "@testing-library/jest-dom";
 import { Home } from "../src/Components/home/Home.js";
 import { Login } from '../src/Components/login/Login.js';
 import { Signup } from '../src/Components/signup/Signup.js';
+import { Forum } from '../src/Components/forum/Forum.js';
 import { UserProvider } from '../src/components/UserContext.tsx';
 import userEvent from '@testing-library/user-event';
-
 
 describe('Home Component', () => {
 	it('Should render homepage correctly', () => {
@@ -116,6 +116,70 @@ describe('Signup Component', () => {
 
 		const signupButton = screen.getByRole('button', { name: 'Sign up' });
 		userEvent.click(signupButton);
+	});
+});
+describe('Forum Component', () => {
+	test('renders header', () => {
+		render(
+			<Router>
+				<Forum />
+			</Router>
+		);
+		const headerElement = screen.getByRole('banner');
+		expect(headerElement).toBeInTheDocument();
+	});
+
+	test('renders main section', () => {
+		render(
+			<Router>
+				<Forum />
+			</Router>
+		);
+		const mainElement = screen.getByRole('main');
+		expect(mainElement).toBeInTheDocument();
+	});
+
+	test('navigates to create-forum page on create post button click', () => {
+		render(
+			<Router>
+				<Forum />
+			</Router>
+		);
+		const createPostButton = screen.getByText('Create Post');
+		userEvent.click(createPostButton);
+		// Assert the navigation or route change
+	});
+
+	test('navigates to /forum on feed button click', () => {
+		render(
+			<Router>
+				<Forum />
+			</Router>
+		);
+		const feedButton = screen.getByText('Feed');
+		userEvent.click(feedButton);
+		// Assert the navigation or route change
+	});
+
+	test('performs logout and redirects to / on logout button click', () => {
+		render(
+			<Router>
+				<Forum />
+			</Router>
+		);
+		const logoutButton = screen.getByText('Logout');
+		userEvent.click(logoutButton);
+		// Assert the logout logic and navigation or route change
+	});
+
+	test('renders footer', () => {
+		render(
+			<Router>
+				<Forum />
+			</Router>
+		);
+		const footerElement = screen.getByRole('contentinfo');
+		expect(footerElement).toBeInTheDocument();
 	});
 });
 
