@@ -17,7 +17,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {vitest} from "vitest";
 
 describe('Home Component', () => {
-	it('Should render homepage correctly', () => {
+	it('Should render homepage title and theme correctly', () => {
 		render(
 			<Router>
 				<Home />
@@ -29,9 +29,20 @@ describe('Home Component', () => {
 
 		const themeElement = screen.getByText('Moms will not feel alone here !!!');
 		expect(themeElement).toBeInTheDocument();
+	});
 
-		const buttonContainerElement = screen.getByRole('button', { name: 'Login' });
-		expect(buttonContainerElement).toBeInTheDocument();
+	it('should render login and signup buttons correctly', () => {
+		render(
+			<Router>
+				<Home />
+			</Router>
+		);
+
+		const loginButtonElement = screen.getByRole('button', { name: 'Login' });
+		expect(loginButtonElement).toBeInTheDocument();
+
+		const signupButtonElement = screen.getByRole('button', { name: 'Signup' });
+		expect(signupButtonElement).toBeInTheDocument();
 	});
 });
 
