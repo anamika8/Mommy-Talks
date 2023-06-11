@@ -36,7 +36,6 @@ jobs:
         env:
           POSTGRES_USER: mommytalks
           POSTGRES_PASSWORD: mommytalks
-          POSTGRES_DB: mommytalks
         options: >-
           --health-cmd pg_isready  
           --health-interval 10s  
