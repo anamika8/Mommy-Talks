@@ -2,9 +2,9 @@ name: Mommytalks CICD
 
 on:
   push:
-    branches: [ master, develop, w9planning ]
+    branches: [main, develop]
   pull_request:
-    branches: [ master, develop, w9planning ]
+    branches: [main, develop]
 
 jobs:
   backend_testing:
