@@ -10,7 +10,7 @@ jobs:
   backend_testing:
     runs-on: ubuntu-latest
     env:
-      DB_HOST: postgres
+      DB_HOST: 0.0.0.0
       DB_PORT: 5432
       DB_NAME: mommytalks
       DB_USER: mommytalks
