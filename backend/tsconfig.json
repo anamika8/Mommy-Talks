@@ -4,6 +4,7 @@
     "transpiler": "ts-node/transpilers/swc-experimental"
   },
   "exclude": [
+    "test/**/*",
     "build/**/*",
     "doc/**/*"
   ],
