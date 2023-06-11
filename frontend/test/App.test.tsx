@@ -3,7 +3,7 @@
 import React from "react";
 // import react-testing methods
 import { render, screen } from "@testing-library/react";
-import {MemoryRouter, MemoryRouter as Router} from 'react-router-dom';
+import { MemoryRouter as Router} from 'react-router-dom';
 import "@testing-library/jest-dom";
 import { Home } from "../src/Components/home/Home.js";
 import { Login } from '../src/Components/login/Login.js';

@@ -237,7 +237,7 @@ void tap.test("Should be able to create new forum", async () => {
 
 void tap.test("Should be able to update existing forum", async () => {
     const newForum = {
-        "forumId": "1",
+        "forumId": "5",
         "title": "Update Post",
         "content": "Update Content"
     };
@@ -256,7 +256,7 @@ void tap.test("Should be able to update existing forum", async () => {
 
 void tap.test("Should be able to update existing forum title", async () => {
     const newForum = {
-        "forumId": "1",
+        "forumId": "5",
         "title": "Update title"
     };
 
@@ -273,7 +273,7 @@ void tap.test("Should be able to update existing forum title", async () => {
 
 void tap.test("Should be able to update existing forum content", async () => {
     const newForum = {
-        "forumId": "1",
+        "forumId": "5",
         "content": "new content"
     };
 
@@ -290,7 +290,7 @@ void tap.test("Should be able to update existing forum content", async () => {
 
 void tap.test("Should be able to delete existing forum", async () => {
     const newForum = {
-        "forumId": "1"
+        "forumId": "5"
     };
     const response = await app.inject({
         method: "DELETE",
