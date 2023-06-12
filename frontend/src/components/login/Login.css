@@ -17,8 +17,9 @@ body * {
 }
 
 .errorMessage {
-  font-size: 14px;
+  font-size: 12px;
   color:red;
+  font-weight: bold;
 }
 
 /* Potentially tricky: fieldset comes with default styles we must override. */

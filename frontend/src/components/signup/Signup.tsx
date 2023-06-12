@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import {signup} from "@/services/Auth.tsx";
 import symbol from './logo.jpg';
@@ -37,6 +37,8 @@ export const SignupForm = () => {
     const [verifyPassword, setVerifyPassword] = useState('');
     const [submitFailed, setSubmitFailed] = useState(false);
     const [uid, setUid] = useState('');
+    const [passwordMatchError, setPasswordMatchError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
     const handleFirstNameChange = (event) => {
@@ -58,40 +60,46 @@ export const SignupForm = () => {
     };
 
     const handlePasswordChange = (event) => {
-        if (!submitFailed) {
-            setPassword(event.target.value);
-        }
+        setPassword(event.target.value);
     };
 
     const handleVerifyPasswordChange = (event) => {
-        if (!submitFailed) {
-            setVerifyPassword(event.target.value);
-        }
+        const verifyPasswordValue = event.target.value;
+        setVerifyPassword(verifyPasswordValue);
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-        // Perform form submission logic here
-        const uuid = await signup(email, password, firstName, lastName);
-        // Reset form fields
-        setFirstName('');
-        setLastName('');
-        setEmail('');
-        setPassword('');
-        setVerifyPassword('');
-        setSubmitFailed(false);
-        // Navigate to a different page after submission
-        navigate("/login");
+        try {
+            //setPasswordMatchError(password !== verifyPassword);
+            console.log(`${password} ${verifyPassword}`);
+            if (password !== verifyPassword) {
+                const errorMessage = 'Password and Verify Password do NOT match';
+                setErrorMessage(errorMessage);
+                setPassword("");
+                setVerifyPassword("");
+            } else {
+                // Perform form submission logic here
+                await signup(email, password, firstName, lastName);
+                // Navigate to a different page after submission
+                navigate("/login");
+            }
+        } catch (error) {
+            console.log(error);
+            if (error.response && error.response.data && error.response.data.error) {
+                setErrorMessage(error.response.data.error);
+            } else {
+                setErrorMessage("Sign up failed. Please try again later.");
+            }
+        }
     };
 
     return (
         <form role="form" action="/signup" method="post" className="signup-form" onSubmit={handleSubmit}>
             <fieldset name="Sign up">
                 <legend>Welcome!</legend>
-                <label htmlFor="errorMessage" id="errorMessage" className="hidden errorMessage">
-                </label>
-
+                {errorMessage && <label htmlFor="errorMessage" id="errorMessage" className="errorMessage">{errorMessage}</label>}
+                <br />
                 <label htmlFor="firstName">First Name *</label>
                 <input
                     type="text"
