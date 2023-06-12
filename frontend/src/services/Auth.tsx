@@ -31,19 +31,6 @@ export async function signup(email, password, first_name, last_name) {
     return httpClient.post("/signup", { email, password, first_name, last_name});
 }
 
-/*
-export async function signup(email, password, first_name, last_name) {
-    try {
-        return httpClient.post("/signup", { email, password, first_name, last_name});
-    } catch (error) {
-        console.log(error);
-        if (error.response && error.response.data && error.response.data.message) {
-            throw new Error(error.response.data.message);
-        } else {
-            throw new Error("Sign up failed. Please try again later.");
-        }
-    }
-}*/
 
 export async function login(uuid, last_login) {
     return httpClient.put("/users", { last_login, uuid});

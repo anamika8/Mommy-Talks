@@ -83,16 +83,7 @@ div {
   font-weight: bold;
   
 }
-/*
-.input-container {
-  display: inline-block;
-  width: 100%;
-  margin-bottom: 15px;
-  align-items: center;
-  justify-content: center;
-  
-}
-*/
+
 .input-container {
     display: flex;
     align-items: center;
@@ -103,11 +94,6 @@ div {
 #search {
     flex: 1;
     padding: 10px;
-    /*border: none;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    font-size: 16px;
-    transition: box-shadow 0.3s ease;*/
     border:1.5px solid rgb(169, 169, 169);
     background: #f1f1f1;
     font-weight: 780;
@@ -282,18 +268,14 @@ span.result {
     width:50%;
     margin:0 auto;
 }
-/*
-body {
-  font-size: 25px;
-}
-*/
+
 .symbol {
   width: auto;
   height: 220px;
 }
 
 span.result {
-    font-size: 1.5rem; 
+    font-size: 1.2rem;
 }
 
 .pages-button {
@@ -301,7 +283,7 @@ span.result {
 }
 
 .more-details {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     
 }
 

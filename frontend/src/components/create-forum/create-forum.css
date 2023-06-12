@@ -140,7 +140,7 @@ h1 {
 
 }
 
-@media only screen and (max-width: 414px) and (min-width: 400px){
+@media only screen and (max-width: 500px) and (min-width: 400px){
 
 .symbol {
   width: auto;
@@ -152,6 +152,11 @@ textarea #ck-editor {
 }
 .view-pg-title {
     font-size: 23px;
+}
+
+#ck-editor {
+    width: 365px;
+    height: 185px;
 }
 
 #create button {
@@ -174,8 +179,8 @@ body {
 .view-pg-title {
     font-size: 30px;
 }
-textarea #ck-editor {
-    width: 730px; 
+#ck-editor {
+    width: 730px;
     height: 185px;
 }
 
@@ -186,4 +191,11 @@ textarea #ck-editor {
     font-size: 25px;
 }
 
+#title {
+    font-size: 20px;
+}
+
+#menu ul li {
+    font-size: 25px;
+}
 }
