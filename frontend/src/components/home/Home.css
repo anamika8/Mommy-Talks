@@ -178,6 +178,10 @@ body * {
         font-size: 20px;
     }
 
+    .app-title {
+        font-size: 1.5em;
+    }
+
     .app-first-page p {
         font-size: 28px;
         text-align: center;
@@ -193,4 +197,15 @@ body * {
 
     }
 
+    .home-page {
+        background-image: url('../.././assets/images/mom-posing-with-baby-V2.jpeg');
+        background-repeat : no-repeat;
+        background-size : cover;
+        background-position: left;
+        margin-top: 10%;
+    }
+
+    .footerInfo {
+       font-size: 0.7em;
+    }
 }
