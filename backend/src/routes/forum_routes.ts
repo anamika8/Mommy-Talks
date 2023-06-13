@@ -8,7 +8,8 @@ export function ForumRoutesInit(app: FastifyInstance) {
 	// Route that returns all topics
 	app.get("/topics", async (req, reply) => {
 		try {
-			const topics = await req.em.find(Forum, {});
+			const topics = await req.em.find(Forum, {}, { orderBy: { id: 'ASC' } });
+
 			reply.send(topics);
 		} catch (err) {
 			reply.status(500).send(err);

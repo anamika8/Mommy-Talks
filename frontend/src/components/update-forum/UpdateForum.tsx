@@ -192,7 +192,7 @@ export const MainComponent = ({currentForumId}) => {
     const populateComments = (currentForumId): void => {
         getForumComments(currentForumId)
             .then((response) => {
-                console.log("Found comments - ", response.length);
+                //console.log("Found comments - ", response.length);
                 setComments(response);
             })
             .catch( (err) => console.log("Error in fetch comments", err));
