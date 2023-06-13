@@ -6,7 +6,7 @@ import "./Signup.css";
 
 export const Signup = () => {
     return (
-        <div>
+        <div className="signup-page">
             <Header />
             <Main />
             <Footer />

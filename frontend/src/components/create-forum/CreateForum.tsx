@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import symbol from "@/components/forum/logo.jpg";
 import "./create-forum.css";
@@ -11,6 +11,7 @@ export const CreateForum = () => {
             <Header />
             <MainContent />
             <Footer />
+            <FontawesomeScript />
         </div>
     );
 };
@@ -143,4 +144,19 @@ export const Footer = () => {
             © 2023 created by Anamika
         </footer>
     );
+};
+
+const FontawesomeScript = () => {
+    useEffect(() => {
+        const script = document.createElement('script');
+        script.src = 'https://use.fontawesome.com/3a36aded45.js';
+        script.async = true;
+        document.body.appendChild(script);
+
+        return () => {
+            document.body.removeChild(script);
+        };
+    }, []);
+
+    return null;
 };
