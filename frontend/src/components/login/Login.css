@@ -22,6 +22,17 @@ body * {
   font-weight: bold;
 }
 
+.login-page {
+  background-image: url('../.././assets/images/mom-posing-with-baby-V2.jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
 /* Potentially tricky: fieldset comes with default styles we must override. */
 fieldset {
   padding: 0;
@@ -230,6 +241,13 @@ button[type="submit"] {
   height: auto;
   font-size: 30px;
 }
+  .login-page {
+    background-image: url('../.././assets/images/mom-posing-with-baby-V2.jpeg');
+    background-repeat : no-repeat;
+    background-size : cover;
+    background-position: left;
+    margin-top: 10%;
+  }
 
 }
 
@@ -240,6 +258,19 @@ button[type="submit"] {
     height: 165px;
     margin: 0 auto;
   }
+
+  .login-page {
+    background-image: url('../.././assets/images/mom-posing-with-baby-V2.jpeg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: -6em;
+    background-position-y: center;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+
 
 }
 

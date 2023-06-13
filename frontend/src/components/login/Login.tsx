@@ -7,7 +7,7 @@ import "./Login.css";
 
 export const Login = () => {
     return (
-        <div>
+        <div className="login-page">
             <Header />
             <Main />
             <Footer />
