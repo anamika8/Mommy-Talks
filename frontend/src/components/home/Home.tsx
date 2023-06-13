@@ -19,7 +19,7 @@ import "./Home.css";
  */
 export const Home = () => {
     return (
-        <div className="js-container">
+        <div className="js-container home-page">
             <Header />
             <Main />
             <Footer />

@@ -10,18 +10,23 @@ body * {
     box-sizing: border-box;
 
 }
-/*
-html {
-    background-image: url('../.././assets/images/mt-background-com.jpg');
-    background-repeat : no-repeat;
-    background-size : cover;
-}*/
+
+.home-page {
+    background-image: url('../.././assets/images/mom-posing-with-baby-V2.jpeg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
 
 .app-title {
     font-family: "Roboto", helvetica, sans-serif, cursive;
     font-size: 2.2em;
-    color: #565656; /* Updated text color */
-    text-shadow: 2px 2px 4px #000000; /* Updated text shadow color */
+    color: #000000; /* Updated text color */
+    text-shadow: 2px 2px 4px #565656; /* Updated text shadow color */
     font-weight:500 ;
 
     /* Flexbox properties */
@@ -29,7 +34,6 @@ html {
     justify-content: center;
     align-items: center;
 
-    /* Add any additional styles or effects here */
 }
 
 .js-container {
@@ -55,6 +59,7 @@ html {
     letter-spacing: 0;
     margin: 0 auto 30px;
     font-family: Georgia, 'Times New Roman', Times, serif;
+    text-shadow: 2px 2px 4px #565656;
 }
 
 .app-first-page p {
@@ -62,7 +67,7 @@ html {
     text-align: center;
     margin: 10px 0 0;
     color: #696969;
-    font-weight: 350;
+    font-weight: 800;
 }
 
 .button-container button {
@@ -164,6 +169,7 @@ html {
         font-size: 15px;
     }
 
+
 }
 
 @media only screen and (max-width: 1030px) and (min-width: 765px){
@@ -185,12 +191,6 @@ html {
         height: auto;
         font-size: 25px;
 
-    }
-
-    html {
-        background-image: url("mt-background-ipod.jpg");
-        background-repeat : no-repeat;
-        background-size : cover;
     }
 
 }
