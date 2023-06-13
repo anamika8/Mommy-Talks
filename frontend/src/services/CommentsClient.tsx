@@ -1,8 +1,9 @@
 import axios from "axios";
 import {CommentType, ForumType, ProfileType} from "@/ProfileTypes.ts";
+import {hostPortConfig} from "../../envConfig.ts";
 
-const serverIP = import.meta.env.VITE_API_HOST;
-const serverPort = import.meta.env.VITE_COMMENTS_PORT;
+const serverIP = hostPortConfig.API_HOST;
+const serverPort = hostPortConfig.COMMENTS_PORT;
 
 const serverUrl = `http://${serverIP}:${serverPort}`;
 
