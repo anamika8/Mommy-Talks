@@ -8,20 +8,50 @@ regarding any concerns I was having that time.
 Hence, I would like to present to you all a forum for mothers to share, discuss and debate all questions faced by mothers
 around the world.
 
-## Mommy-Talks SETUP
+## Mommy-Talks Setup
 (All commands are with respect to the root directory of the project)
 
 
 * Clone repository
 ```
-git clone 
+    git clone git@github.com:anamika8/Mommy-Talks.git
 ```
-* Copy and configure .env file (cp backend/.env.example backend/.env)
-* Install dependencies (cd backend/ && pnpm install)
-* Start database (docker compose up postgres)
 
-* Reset prior Typeorm setup (cd backend/ && pnpm typeorm:drop)
-* Migrate database (cd backend/ && pnpm migration:run)
-* Seed Database (cd backend/ && pnpm seed)
-* Test backend ( cd backend/ && pnpm test)
-* Start backend (cd backend/ && pnpm dev)
+* Navigate to the directory
+```
+    cd Mommy-Talks
+```
+
+* Build the Docker Compose file from the root directory of the project
+
+```
+    docker compose build --no-cache
+```
+
+* Start the docker containers
+
+``` 
+    docker compose up
+```
+
+* Once all the 4 containers (postgres, backend, frontend, comments-service) are up & running, open http://localhost in a browser, to see the below page:
+
+![Screenshot of landing page](landing-page-screenshot.png 'Mommy-Talks')
+ 
+
+## Technical Specification
+
+- Backend (Fastify)
+- Frontend (React/HTML/CSS) using Vite
+- Persistence (Database/File Storage)
+  - Utilize Mikro-ORM's CLI to manage the database.
+  - Configure the Mikro-ORM to connect to PostgreSQL database.
+- Authentication (Third-party API integration)
+  - Google Firebase authentication
+- Docker/Compose
+- Unit Testing:
+  - Backend Testing done using Tap/ Chai
+  - Frontend Testing done using Vite's vitest
+- Add an independent microservice COMMENTS  to the final project:
+  - Written using Python FastAPI
+  - Containerized in Docker file .
