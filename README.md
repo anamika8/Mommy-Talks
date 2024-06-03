@@ -54,4 +54,4 @@ around the world.
   - Frontend Testing done using Vite's vitest
 - Add an independent microservice COMMENTS  to the final project:
   - Written using Python FastAPI
-  - Containerized in Docker file .
+  - Containerized in Docker file 
